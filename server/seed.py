@@ -36,13 +36,13 @@ def make_user():
 
     users_obj = []
 
-    for i in range(23):
+    for i in range(10):
     # for i in range(10):
         user = User(
             full_name= fake.name(),   
             email= fake.email(),
             username= fake.name(),
-            password= randint(1,23),
+            password= randint(1,14),
             biography= fake.text()
         )
 
@@ -57,10 +57,10 @@ def make_comment():
 
     comments_obj = []
 
-    for i in range(69):
+    for i in range(20):
         comment = Comment(
             content = fake.text(),
-            user_id = randint(1,23),
+            user_id = randint(1,10),
             update_id = randint(1,6)
         )
 

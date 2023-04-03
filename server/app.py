@@ -41,7 +41,25 @@ class Users(Resource):
 
         return response 
         
-api.add_resource(Users, '/users')     #Recursion Error 
+api.add_resource(Users, '/users')    
+
+class UsersById(Resource):
+    def get(self,id):
+        user = User.query.filter(id == id).first()
+        user_dictionary= user.to_dict()
+
+        if not user:
+            return make_response(
+                {"error": "User not found"},
+                404
+            )
+        else:
+            return make_response(
+                jsonify(user_dictionary),
+                200
+            )
+        
+api.add_resource(UsersById, '/users/<int:id>')
 
 class Updates(Resource):
     def get(self):
@@ -74,6 +92,7 @@ api.add_resource(Comments, '/comments')
 class Projects(Resource):
     def get(self):
         projects = Project.query.all()
+        print(projects[0].users[0].user.username) #a way to find the original person of project
         projects_dict =  [project.to_dict() for project in projects]
 
         response = make_response(
@@ -83,7 +102,25 @@ class Projects(Resource):
 
         return response 
         
-api.add_resource(Projects, '/projects') #recursion error
+api.add_resource(Projects, '/projects') 
+
+class ProjectsById(Resource):
+    def get(self,id):
+        project = Project.query.filter(id == id).first()
+        project_dictionary= project.to_dict()
+
+        if not project:
+            return make_response(
+                {"error": "Project not found"},
+                404
+            )
+        else:
+            return make_response(
+                jsonify(project_dictionary),
+                200
+            )
+        
+api.add_resource(ProjectsById, '/projects/<int:id>')
 
 class UserProjects(Resource):
     def get(self):
@@ -97,8 +134,25 @@ class UserProjects(Resource):
 
         return response 
         
-api.add_resource(UserProjects, '/user_projects') #recursion error
+api.add_resource(UserProjects, '/user_projects') 
 
+class UserProjectsById(Resource):
+    def get(self,id):
+        user_project = UserProject.query.filter(id == id).first()
+        user_project_dictionary= user_project.to_dict()
+
+        if not user_project:
+            return make_response(
+                {"error": "User not found"},
+                404
+            )
+        else:
+            return make_response(
+                jsonify(user_project_dictionary),
+                200
+            )
+        
+api.add_resource(UserProjectsById, '/user_projects/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

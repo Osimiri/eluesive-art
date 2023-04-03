@@ -65,6 +65,7 @@ class Project(db.Model, SerializerMixin):
     title = db.Column(db.String)  
     likes = db.Column(db.Integer)
     description = db.Column(db.String)
+    creator = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
@@ -74,8 +75,10 @@ class Project(db.Model, SerializerMixin):
 class UserProject(db.Model, SerializerMixin):
     __tablename__ = 'user_projects'
 
-    serialize_rules = ('-project.users', '-user.projects',)
+    serialize_rules = ('-project.users', '-user.projects','-user_id')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column( db.Integer, db.ForeignKey('users.id'))
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+
+    #find way to transfer userProject id information to the project itself

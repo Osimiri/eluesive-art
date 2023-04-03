@@ -20,6 +20,8 @@ class User(db.Model, SerializerMixin):
     password = db.Column(db.Integer)
     biography = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
+    # collaborator_name = db.Column(db.String, unique = True)
+    # creator_name = db.Column(db.String, unique = True)                           COULD BE USED TO DISTINGUIS ROLES ON A PROJECT
 
     projects = db.relationship("UserProject", backref = "user")
 

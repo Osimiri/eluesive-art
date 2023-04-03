@@ -80,5 +80,6 @@ class UserProject(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column( db.Integer, db.ForeignKey('users.id'))
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+    
 
     #find way to transfer userProject id information to the project itself

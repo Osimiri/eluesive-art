@@ -45,7 +45,7 @@ api.add_resource(Users, '/users')
 
 class UsersById(Resource):
     def get(self,id):
-        user = User.query.filter(id == id).first()
+        user = User.query.filter(User.id == id).first()
         user_dictionary= user.to_dict()
 
         if not user:
@@ -106,7 +106,7 @@ api.add_resource(Projects, '/projects')
 
 class ProjectsById(Resource):
     def get(self,id):
-        project = Project.query.filter(id == id).first()
+        project = Project.query.filter(Project.id == id).first()
         project_dictionary= project.to_dict()
 
         if not project:
@@ -138,7 +138,7 @@ api.add_resource(UserProjects, '/user_projects')
 
 class UserProjectsById(Resource):
     def get(self,id):
-        user_project = UserProject.query.filter(id == id).first()
+        user_project = UserProject.query.filter(UserProject.id == id).first()
         user_project_dictionary= user_project.to_dict()
 
         if not user_project:

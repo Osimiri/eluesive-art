@@ -16,20 +16,6 @@ fake.add_provider(profile)
 fake.add_provider(isbn)
 fake.add_provider(internet)
 
-
-
-def make_project():
-    
-    Project.query.delete()
-  
-    project_obj = [
-        Project(title = "test project", likes = 2, description = "Lorem Ipsum"),
-        Project(title = "Other project", likes = 20, description = "Lorem Ipsum")
-        ]
-    
-    db.session.add_all(project_obj)
-    db.session.commit()
-
 def make_user():
     
     User.query.delete()
@@ -50,6 +36,31 @@ def make_user():
     
     db.session.add_all(users_obj)
     db.session.commit()
+
+
+def make_userProject():
+    UserProject.query.delete()
+
+    user_project_obj = [
+        UserProject(user_id = 1, project_id = 1),
+        UserProject(user_id = 2, project_id = 2)
+    ]
+    
+    db.session.add_all(user_project_obj)
+    db.session.commit()
+
+def make_project():
+    
+    Project.query.delete()
+  
+    project_obj = [
+        Project(title = "test project", likes = 2, description = "Lorem Ipsum" , creator = db.session.get(User,1).username),
+        Project(title = "Other project", likes = 20, description = "Lorem Ipsum", creator = db.session.get(User,2).username)
+        ]
+    
+    db.session.add_all(project_obj)
+    db.session.commit()
+
 
 def make_comment():
 
@@ -85,18 +96,6 @@ def make_update():
     
     db.session.add_all(update_obj)
     db.session.commit()
-
-def make_userProject():
-    UserProject.query.delete()
-
-    user_project_obj = [
-        UserProject(user_id = 1, project_id = 1),
-        UserProject(user_id = 2, project_id = 2)
-    ]
-    
-    db.session.add_all(user_project_obj)
-    db.session.commit()
-
 
 
 

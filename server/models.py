@@ -5,83 +5,75 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 from config import db
 
-# metadata = MetaData(naming_convention={
-#     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-# })
-
 # db = SQLAlchemy(metadata= MetaData())
 
 # Models go here!
-
-class Author(db.Model, SerializerMixin):
-    __tablename__ = 'authors'
-
-    serialize_rules = ('-books.author','-books.liked_books')
-
-    id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String)
-    author_image = db.Column(db.String)
-    biography = db.Column(db.String)
-    created_at = db.Column(db.DateTime, server_default = db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate = db.func.now())
-
-    books = db.relationship("Book", backref = "author")
-
-class Genre(db.Model, SerializerMixin):
-    __tablename__ = 'genres'
-
-    serialize_rules = ('-books.genre','-books.liked_books', '-genre.books', "-books")
-
-    id = db.Column(db.Integer, primary_key=True)
-    genre = db.Column(db.String)
-    created_at = db.Column(db.DateTime, server_default = db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate = db.func.now())
-
-    books = db.relationship("Book", backref = 'genre')
-
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-user_books', "-liked_books.user", '-liked_books.book')
+    serialize_rules = ('-user_projects', '-projects.user', '-projects.id','-projects.project_id', '-projects.user_id' )
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String)
-    password = db.Column(db.String)
     full_name = db.Column(db.String)
+    email = db.Column(db.String, unique=True)
+    username = db.Column(db.String, unique = True)
+    password = db.Column(db.Integer)
+    biography = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default = db.func.now())
+
+    projects = db.relationship("UserProject", backref = "user")
+
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'full_name': self.full_name,
+    #         'email': self.email,
+    #         'username': self.username,
+    #         'biography': self.biography,
+    #         'created_at': str(self.created_at),
+    #         'projects': [project.to_dict() for project in self.projects]
+    #     }
+class Update(db.Model, SerializerMixin):
+    __tablename__ = 'updates'
+
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String)
+    media_type = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
-
-
-    liked_books = db.relationship("UserBook", backref = "user")
-
-class UserBook(db.Model, SerializerMixin):
-    __tablename__ = 'user_books'
-
-    serialize_rules = ('-user.liked_books', '-book.liked_books')
+    
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+class Comment(db.Model, SerializerMixin):
+    __tablename__ = 'comments'
 
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, server_default = db.func.now())
+    content = db.Column(db.String)
+    timestamp = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    update_id = db.Column(db.Integer, db.ForeignKey("updates.id"))
 
-class Book(db.Model, SerializerMixin):
-    __tablename__ = 'books'
+class Project(db.Model, SerializerMixin):
+    __tablename__ = 'projects'
 
-    serialize_rules = ('-user_books', "-liked_books.book", '-liked_books.user', '-author.books', '-author.biography', '-genre.books')
+    serialize_rules = ('-user_projects','-users.project', '-projects.user', '-users.user')
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
-    price = db.Column(db.Float)  #use random float number snap to 2
-    isbn = db.Column(db.Integer)
+    title = db.Column(db.String)  
     likes = db.Column(db.Integer)
-    image = db.Column(db.String)
+    description = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
-    genre_id = db.Column(db.Integer, db.ForeignKey("genres.id"))
-    author_id = db.Column(db.Integer, db.ForeignKey('authors.id'))
+    users = db.relationship("UserProject", backref = "project")
+    #figure out how to make one person the main creator and then the collaborator BOOLEAN?
 
-    liked_books = db.relationship("UserBook", backref = "book")
+class UserProject(db.Model, SerializerMixin):
+    __tablename__ = 'user_projects'
 
+    serialize_rules = ('-project.users', '-user.projects',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column( db.Integer, db.ForeignKey('users.id'))
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))

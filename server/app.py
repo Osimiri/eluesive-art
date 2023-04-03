@@ -10,7 +10,7 @@ from flask_cors import CORS
 
 # Local imports
 from config import app, db, api
-from models import Author, Genre, User, UserBook, Book
+from models import Comment, Update, User, Project, UserProject, db
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -27,71 +27,7 @@ api = Api(app)
 
 @app.route('/')
 def index():
-    return '<h1>Welcome To The Better Reads Better Backend</h1>'
-
-class Authors(Resource):
-    def get(self):
-        authors = Author.query.all()
-        authors_dict =  [author.to_dict() for author in authors]
-
-        response = make_response(
-            jsonify(authors_dict),
-            200
-        )
-
-        return response 
-
-    def post(self):        
-        new_author = Author(
-            full_name= request.get_json()['full_name'],
-            biography = request.get_json()['biography'],
-            author_image = request.get_json()['author_image']
-        )
-        db.session.add(new_author)
-        db.session.commit()
-        print(new_author)
-        response = make_response(
-            jsonify(new_author.to_dict()),
-            201
-        )
-        return response
-        
-api.add_resource(Authors, '/authors')     
-
-
-class AuthorsById(Resource):
-    def get(self,id):
-        author = Author.query.filter(id == id).first()
-        author_dictionary= author.to_dict()
-
-        if not author:
-            return make_response(
-                {"error": "Author not found"},
-                404
-            )
-        else:
-            return make_response(
-                jsonify(author_dictionary),
-                200
-            )
-        
-api.add_resource(AuthorsById, '/authors/<int:id>')
-
-
-class Genres(Resource):
-    def get(self):
-        genres = Genre.query.all()
-        genres_dict =  [genre.to_dict() for genre in genres]
-
-        response = make_response(
-            jsonify(genres_dict),
-            200
-        )
-
-        return response 
-        
-api.add_resource(Genres, '/genres')
-
+    return '<h1> Dont let your Art Elude you </h1>'
 
 class Users(Resource):
     def get(self):
@@ -104,140 +40,64 @@ class Users(Resource):
         )
 
         return response 
-    def post(self):
-        new_user = Author(
-            username= request.get_json()['username'],
-            password = request.get_json()['password'],
-            full_name = request.get_json()['full_name']
-        )
-        db.session.add(new_user)
-        db.session.commit()
-
-        response = make_response(
-            jsonify(new_user.to_dict()),
-            201
-        )
-        return response
-
-api.add_resource(Users, '/users')
-
-
-class UsersById(Resource):
-    def get(self,id):
-        user = User.query.filter(id == id).first()
-        user_dictionary = user.to_dict()
         
-        if not user: 
-            return make_response(
-                {"error": "User not found"},
-                404
-            )
-        else:
-            return make_response(
-                jsonify(user_dictionary),
-                200
-            )
-api.add_resource(UsersById, '/users/<int:id>')     
+api.add_resource(Users, '/users')     #Recursion Error 
 
-
-class Books(Resource):
+class Updates(Resource):
     def get(self):
-        books = Book.query.all()
-        books_dict =  [book.to_dict() for book in books]
+        updates = Update.query.all()
+        updates_dict =  [update.to_dict() for update in updates]
 
         response = make_response(
-            jsonify(books_dict),
+            jsonify(updates_dict),
             200
         )
+
         return response 
+        
+api.add_resource(Updates, '/updates')
 
-    def post(self):
-        # author =  Author.query.filter_by(full_name = request.get_json()['author']).first()    
-        fields = request.get_json()
-        print(fields)
-        genre =  Genre.query.filter_by(genre = request.get_json()['genre']).first()
-        new_book = Book(
-            title= request.get_json()['title'],
-            price = request.get_json()['price'],
-            isbn = request.get_json()['isbn'],
-            image = request.get_json()['image'],
-            likes = request.get_json()['likes'],
-            genre_id = genre.id,
-            author_id = request.get_json()['author_id']
-        )
-        db.session.add(new_book)
-        db.session.commit()
-        print(new_book)
-        response = make_response(
-            jsonify(new_book.to_dict()),
-            201
-        )
-        return response
-
-
-api.add_resource(Books, '/books') #recursion error 
-
-
-class BooksById(Resource):
-    def get(self, id):
-        book = Book.query.filter_by(id=id).first()
-        book_dictionary = book.to_dict()
-
-        if not book:
-            return make_response(
-                {"error": "Book not found"}, 
-                404
-            )
-        else:
-            return make_response(
-                jsonify(book_dictionary),
-                200
-            )
-    
-    def patch(self, id):
-
-        data = request.get_json()
-
-        book = Book.query.filter_by(id=id).first()
-
-        for attr in data:
-            setattr(book, attr, data[attr])
-
-        db.session.add(book)
-        db.session.commit()
-
-        return make_response(book.to_dict(), 200)
-    
-    def delete(self, id):
-        book = Book.query.filter_by(id=id).first()
-        if not book:
-            return make_response(
-                jsonify({'error': 'Book not found'}),
-                404
-            )
-        db.session.delete(book)
-        db.session.commit()
-
-        return make_response(
-            jsonify({'message': 'Book successfully deleted', 'id':id}),
-            200
-        )
-
-api.add_resource(BooksById, '/books/<int:id>') #recursion error 
-
-
-class UserBooks(Resource):
+class Comments(Resource):
     def get(self):
-        user_books = UserBook.query.all()
-        user_books_dict =  [user_book.to_dict() for user_book in user_books]
+        comments = Comment.query.all()
+        comments_dict =  [comment.to_dict() for comment in comments]
 
         response = make_response(
-            jsonify(user_books_dict),
+            jsonify(comments_dict),
             200
         )
-        return response 
 
-api.add_resource(UserBooks, '/user_books') #recursion 
+        return response 
+        
+api.add_resource(Comments, '/comments')
+
+class Projects(Resource):
+    def get(self):
+        projects = Project.query.all()
+        projects_dict =  [project.to_dict() for project in projects]
+
+        response = make_response(
+            jsonify(projects_dict),
+            200
+        )
+
+        return response 
+        
+api.add_resource(Projects, '/projects') #recursion error
+
+class UserProjects(Resource):
+    def get(self):
+        user_projects = UserProject.query.all()
+        user_projects_dict =  [user_project.to_dict() for user_project in user_projects]
+
+        response = make_response(
+            jsonify(user_projects_dict),
+            200
+        )
+
+        return response 
+        
+api.add_resource(UserProjects, '/user_projects') #recursion error
 
 
 if __name__ == '__main__':

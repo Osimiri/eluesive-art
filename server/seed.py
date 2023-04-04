@@ -28,9 +28,10 @@ def make_user():
             full_name= fake.name(),   
             email= fake.email(),
             username= fake.name(),
-            password= randint(1,14),
             biography= fake.text()
         )
+        
+        user.password_hash = user.username + 'password'
 
         users_obj.append(user)
     
@@ -105,8 +106,8 @@ if __name__ == '__main__':
     with app.app_context():
         print("Starting seed...")
         # Seed code goes here!
-        make_project()
         make_user()
+        make_project()
         make_comment()
         make_update()
         make_userProject()

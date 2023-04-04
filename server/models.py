@@ -3,11 +3,15 @@ from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
-from config import db
+from sqlalchemy.ext.hybrid import hybrid_property
+from config import db, bcrypt
 
 # db = SQLAlchemy(metadata= MetaData())
 
 # Models go here!
+
+
+
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
@@ -16,14 +20,33 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String)
     email = db.Column(db.String, unique=True)
-    username = db.Column(db.String, unique = True)
-    password = db.Column(db.Integer)
+    username = db.Column(db.String, unique=True, nullable=False)
+    _password_hash = db.Column(db.String, nullable=False)
     biography = db.Column(db.String)
+    image_url = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     # collaborator_name = db.Column(db.String, unique = True)
     # creator_name = db.Column(db.String, unique = True)                           COULD BE USED TO DISTINGUIS ROLES ON A PROJECT
 
     projects = db.relationship("UserProject", backref = "user")
+
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError('Password hashes may not be viewed.')
+
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8'))
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8'))
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+
 
     # def to_dict(self):
     #     return {
@@ -80,6 +103,6 @@ class UserProject(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column( db.Integer, db.ForeignKey('users.id'))
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
-    
+
 
     #find way to transfer userProject id information to the project itself

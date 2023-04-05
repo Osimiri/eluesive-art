@@ -26,7 +26,7 @@ class User(db.Model, SerializerMixin):
     image_url = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     # collaborator_name = db.Column(db.String, unique = True)
-    # creator_name = db.Column(db.String, unique = True)                           COULD BE USED TO DISTINGUIS ROLES ON A PROJECT
+    # creator_name = db.Column(db.String, unique = True)                           COULD BE USED TO DISTINGUISH ROLES ON A PROJECT
 
     projects = db.relationship("UserProject", backref = "user")
 

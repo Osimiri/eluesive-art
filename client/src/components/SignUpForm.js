@@ -9,7 +9,7 @@ function SignUpForm({ onLogin }) {
   const [biography, setBio] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);

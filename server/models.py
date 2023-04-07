@@ -61,7 +61,7 @@ class User(db.Model, SerializerMixin):
 class Update(db.Model, SerializerMixin):
     __tablename__ = 'updates'
 
-    # serialize_rules = ('+ project_id',)
+    serialize_rules = ('-user_projects','-project', '-comments')
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String)

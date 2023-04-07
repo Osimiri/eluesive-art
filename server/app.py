@@ -167,6 +167,38 @@ class Updates(Resource):
         
 api.add_resource(Updates, '/updates')
 
+class UpdatesById(Resource):
+    def get(self,id):
+        updates = Update.query.filter(Update.project_id == id).all()
+        updates_dictionary = [update.to_dict() for update in updates]
+        return make_response(jsonify(updates_dictionary),200)
+
+api.add_resource(UpdatesById, '/project_updates/<int:id>')
+
+
+
+@app.route('/update_comments/<int:update_id>')
+def update_page(update_id):
+    update = Update.query.get_or_404(update_id)
+    comments = update.comments
+    return jsonify({
+        'update': {
+            'id': update.id,
+            'content': update.content,
+            'media_type': update.media_type,
+            'created_at': update.created_at,
+            'updated_at': update.updated_at,
+            'project_id': update.project_id
+        },
+        'comments': [{
+            'id': comment.id,
+            'content': comment.content,
+            'timestamp': comment.timestamp,
+            'updated_at': comment.updated_at
+        } for comment in comments]
+    })
+
+
 class Comments(Resource):
     def get(self):
         comments = Comment.query.all()

@@ -61,6 +61,8 @@ class User(db.Model, SerializerMixin):
 class Update(db.Model, SerializerMixin):
     __tablename__ = 'updates'
 
+    # serialize_rules = ('+ project_id',)
+
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String)
     media_type = db.Column(db.String)
@@ -68,6 +70,8 @@ class Update(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+    comments = db.relationship('Comment', backref='update', lazy=True)
+
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
@@ -93,6 +97,7 @@ class Project(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
     users = db.relationship("UserProject", backref = "project")
+    # updates = db.relationship("Update", backref= "update")
     #figure out how to make one person the main creator and then the collaborator BOOLEAN?
 
 class UserProject(db.Model, SerializerMixin):

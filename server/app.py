@@ -184,7 +184,7 @@ def update_page(update_id):
     return jsonify({
         'update': {
             'id': update.id,
-            'content': update.content,
+            'notes': update.notes,
             'media_type': update.media_type,
             'created_at': update.created_at,
             'updated_at': update.updated_at,

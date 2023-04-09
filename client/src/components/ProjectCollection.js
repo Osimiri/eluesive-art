@@ -9,8 +9,8 @@ import {Card} from "semantic-ui-react";
 
 function ProjectCollection({projects}){
   const projectCards = projects.map((project)=> {
-      console.log(project.creator)
-      console.log(project)
+      // console.log(project.creator)
+      // console.log(project)
 
       return (
       <ProjectCard

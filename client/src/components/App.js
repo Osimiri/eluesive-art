@@ -5,6 +5,7 @@ import Home from "../components/Home";
 import Submit from "../components/Submit";
 import Login from "../components/Login";
 import ProjectCollection from "../components/ProjectCollection";
+import ProjectPage from "../components/ProjectPage";
 
 
 
@@ -42,16 +43,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} /> 
           <Route path="/explore" element={<ProjectCollection projects ={projects} />} /> 
-          {/* <Route path="/profile" element={<Profile users = {users} />} /> */}
           <Route path="/submit" element={<Submit />} />
-
+          <Route path="/projects/:projectId" element={<ProjectPage />} />
         </Routes>
-
 
       </div>
   )
 }
-
 
 
 export default App;

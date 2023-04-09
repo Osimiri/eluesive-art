@@ -67,6 +67,7 @@ class Update(db.Model, SerializerMixin):
     notes = db.Column(db.String)
     media_type = db.Column(db.String)
     image_url = db.Column(db.String)
+    title = db.Column(db.String)  
     likes = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())

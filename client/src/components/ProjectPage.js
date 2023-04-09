@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ProjectUpdate from "./ProjectUpdate";
+import UpdateCard from "./UpdateCard";
 
 function ProjectPage() {
-  const { id } = useParams(); // get id parameter from URL
-
+  const { projectId } = useParams(); // get id parameter from URL
+  //   project_updates/1
+  const [updates, setUpdates] = useState(null);
   const [project, setProject] = useState(null);
 
   useEffect(() => {
-    // fetch project details from backend API using id
-    // setProject with fetched data
-  }, [id]);
+    fetch(`/projects/${projectId}`)
+      .then((res) => res.json())
+      .then((data) => setProject(data));
+  }, [projectId]);
+
+  useEffect(() => {
+    fetch(`/project_updates/${projectId}`)
+      .then((res) => res.json())
+      .then((data) => setUpdates(data));
+  }, [projectId]);
 
   if (!project) {
     return <div>Loading...</div>;
@@ -24,14 +32,18 @@ function ProjectPage() {
       <p>Description: {project.description}</p>
 
       <h2>Updates:</h2>
-      {project.updates.map((update) => (
-        <ProjectUpdate
-          key={update.id}
-          title={update.title}
-          description={update.description}
-          date={update.date}
-        />
-      ))}
+      {updates &&
+        updates.map((update) => (
+          <UpdateCard
+            key={update.id}
+            likes={update.likes}
+            date={update.created_at}
+            image={update.image_url}
+            update={update}
+            notes={update.notes}
+            title={update.title}
+          />
+        ))}
     </div>
   );
 }

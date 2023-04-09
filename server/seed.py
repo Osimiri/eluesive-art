@@ -93,6 +93,7 @@ def make_update():
             media_type = 'Painting',
             project_id = randint(1,2),
             likes = randint(0,42),
+            title = fake.name(),
             image_url = 'https://pbs.twimg.com/media/EjPZDxeXkAAulRc.jpg'
         )
 

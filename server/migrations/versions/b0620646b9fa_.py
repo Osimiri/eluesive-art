@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0855c2dfbea2
+Revision ID: b0620646b9fa
 Revises: 
-Create Date: 2023-04-07 10:50:12.213866
+Create Date: 2023-04-09 14:03:36.265154
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0855c2dfbea2'
+revision = 'b0620646b9fa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('title', sa.String(), nullable=True),
     sa.Column('likes', sa.Integer(), nullable=True),
     sa.Column('description', sa.String(), nullable=True),
+    sa.Column('image_url', sa.String(), nullable=True),
     sa.Column('creator', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -43,8 +44,10 @@ def upgrade():
     )
     op.create_table('updates',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('content', sa.String(), nullable=True),
+    sa.Column('notes', sa.String(), nullable=True),
     sa.Column('media_type', sa.String(), nullable=True),
+    sa.Column('image_url', sa.String(), nullable=True),
+    sa.Column('likes', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('project_id', sa.Integer(), nullable=True),

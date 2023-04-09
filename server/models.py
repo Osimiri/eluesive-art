@@ -64,8 +64,10 @@ class Update(db.Model, SerializerMixin):
     serialize_rules = ('-user_projects','-project', '-comments')
 
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String)
+    notes = db.Column(db.String)
     media_type = db.Column(db.String)
+    image_url = db.Column(db.String)
+    likes = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
@@ -86,12 +88,13 @@ class Comment(db.Model, SerializerMixin):
 class Project(db.Model, SerializerMixin):
     __tablename__ = 'projects'
 
-    serialize_rules = ('-user_projects','-users.project', '-projects.user', '-users.user')
+    serialize_rules = ('-user_projects','-users.project', '-projects.user') #'-users.user' will get rid of user info on project
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)  
     likes = db.Column(db.Integer)
     description = db.Column(db.String)
+    image_url = db.Column(db.String)
     creator = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())

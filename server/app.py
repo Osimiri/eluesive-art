@@ -167,13 +167,13 @@ class Updates(Resource):
         
 api.add_resource(Updates, '/updates')
 
-class UpdatesById(Resource):
+class UpdatesByProjectId(Resource):
     def get(self,id):
         updates = Update.query.filter(Update.project_id == id).all()
         updates_dictionary = [update.to_dict() for update in updates]
         return make_response(jsonify(updates_dictionary),200)
 
-api.add_resource(UpdatesById, '/project_updates/<int:id>')
+api.add_resource(UpdatesByProjectId, '/project_updates/<int:id>')
 
 
 

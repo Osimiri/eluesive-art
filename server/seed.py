@@ -28,7 +28,8 @@ def make_user():
             full_name= fake.name(),   
             email= fake.email(),
             username= fake.name(),
-            biography= fake.text()
+            biography= fake.text(),
+            image_url = 'https://pbs.twimg.com/media/FcRhl13aIAEUT1u.jpg'
         )
         
         user.password_hash = user.username + 'password'
@@ -55,8 +56,8 @@ def make_project():
     Project.query.delete()
   
     project_obj = [
-        Project(title = "test project", likes = 2, description = "Lorem Ipsum" , creator = db.session.get(User,1).username),
-        Project(title = "Other project", likes = 20, description = "Lorem Ipsum", creator = db.session.get(User,2).username)
+        Project(title = "test project", likes = 2, image_url = 'https://pbs.twimg.com/media/EeFwGoCUYAEWRr6.png' ,description = "Lorem Ipsum" , creator = db.session.get(User,1).username),
+        Project(title = "Other project", likes = 20, image_url = 'https://pbs.twimg.com/media/EeFwGoCUYAEWRr6.png' ,description = "Lorem Ipsum", creator = db.session.get(User,2).username)
         ]
     
     db.session.add_all(project_obj)
@@ -88,9 +89,11 @@ def make_update():
 
     for i in range(15):
         update = Update(
-            content = fake.name(),
+            notes = fake.text(),
             media_type = 'Painting',
-            project_id = randint(0,2)
+            project_id = randint(1,2),
+            likes = randint(0,42),
+            image_url = 'https://pbs.twimg.com/media/EjPZDxeXkAAulRc.jpg'
         )
 
         update_obj.append(update)

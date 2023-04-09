@@ -4,12 +4,15 @@ import Header from "../components/Header";
 import Home from "../components/Home";
 import Submit from "../components/Submit";
 import Login from "../components/Login";
+import ProjectCollection from "../components/ProjectCollection";
+
 
 
 
 function App() {
   
   const [user, setUser] = useState(null);
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     // auto-login
@@ -19,6 +22,14 @@ function App() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    fetch("/projects")       // link for the authors DB
+      .then((res) => res.json())
+      .then((data) => setProjects(data));
+  }, []);
+  
+  // console.log(projects)
 
   if (!user) return <Login onLogin={setUser} />;
   
@@ -30,7 +41,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} /> 
-          {/* <Route path="/" element={<Home />} />  */}
+          <Route path="/explore" element={<ProjectCollection projects ={projects} />} /> 
           {/* <Route path="/profile" element={<Profile users = {users} />} /> */}
           <Route path="/submit" element={<Submit />} />
 

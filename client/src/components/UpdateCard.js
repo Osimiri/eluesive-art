@@ -129,9 +129,9 @@ function UpdateCard({ title, update, likes, date, image, notes }) {
             selectedUpdateComments.comments &&
             selectedUpdateComments.comments.map((comment) => (
               <div key={comment.id}>
+                <p>{comment.username}</p>
                 <p>{comment.content}</p>
                 <p>{comment.timestamp}</p>
-                {/* <p>{comment.get_username()}</p> */}
               </div>
             ))}
         </Modal.Content>

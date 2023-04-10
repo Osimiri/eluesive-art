@@ -194,6 +194,8 @@ def update_page(update_id):
             'id': comment.id,
             'content': comment.content,
             'timestamp': comment.timestamp,
+            'user_id': comment.user_id,
+            'username': comment.get_username(),
             'updated_at': comment.updated_at
         } for comment in comments]
     })

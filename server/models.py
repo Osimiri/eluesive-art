@@ -28,6 +28,12 @@ class User(db.Model, SerializerMixin):
 
     projects = db.relationship("UserProject", backref = "user")
 
+    @staticmethod
+    def get_username_by_id(user_id):
+        user = User.query.get(user_id)
+        return user.username if user else None
+
+
     @hybrid_property
     def password_hash(self):
         raise AttributeError('Password hashes may not be viewed.')
@@ -75,7 +81,9 @@ class Comment(db.Model, SerializerMixin):
     update_id = db.Column(db.Integer, db.ForeignKey("updates.id"))
 
     def get_username(self):
-        return self.user.username
+        return User.get_username_by_id(self.user_id)
+    # def get_username(self):
+    #     return self.user.username
     # def get_username(self):
     #     user = User.query.get(self.user_id)
     #     return user.username if user else None

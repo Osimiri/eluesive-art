@@ -13,10 +13,10 @@ function Home() {
           <h1>Eluesive Art</h1>
           <h1>Eluesive Art</h1>
           <h1>Eluesive Art</h1>
-          <h1>What is it?</h1>
+          <h1 className="text-3xl font-bold underline">What is it?</h1>
           <p>Eluesive Art is a platform designed to help artists stay productive, motivated, and engaged with their creative process. Whether you're looking for feedback, support, or inspiration, our community is here to help you achieve your artistic goals.</p>
           
-          <p>Welcome to our creative community! We are a website designed for artists who want to stay motivated and productive. 
+          <p >Welcome to our creative community! We are a website designed for artists who want to stay motivated and productive. 
               We believe that procrastination can be a major obstacle to achieving your goals as an artist, and that's why we offer a space where you can showcase your work,
               get feedback from fellow artists, and stay accountable to your creative projects. </p>
 

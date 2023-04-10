@@ -33,7 +33,7 @@ function App() {
   // console.log(projects)
 
   if (!user) return <Login onLogin={setUser} />;
-  
+  console.log(user);
 
     
   return(

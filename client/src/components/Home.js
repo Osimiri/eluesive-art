@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Embed } from 'semantic-ui-react'
 
 function Home() {
   // Code goes here!
-const [bookArray, setBookArray] = useState([])
 
-useEffect(() => {
-  fetch("/")
-  .then(res => res.json())
-  .then(data => setBookArray(data))
-},
-[]);
     return (
         <section>
           {/* <div className = "header">

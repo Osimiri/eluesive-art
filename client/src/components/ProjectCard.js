@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Image, Button, Header, Icon, Label } from "semantic-ui-react";
+import { Card, Image, Button, Icon, Label } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 
 function ProjectCard({
@@ -18,7 +18,7 @@ function ProjectCard({
     setShowFront(!showFront);
   };
 
-  const userID = users[0].id;
+  // const userID = users[0].id;
   // console.log(userID);
 
   return (

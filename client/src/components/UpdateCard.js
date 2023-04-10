@@ -3,12 +3,11 @@ import {
   Card,
   Image,
   Button,
-  Header,
   Icon,
   Label,
   Modal,
 } from "semantic-ui-react";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 function UpdateCard({ title, update, likes, date, image, notes }) {
   const [showFront, setShowFront] = useState(true);

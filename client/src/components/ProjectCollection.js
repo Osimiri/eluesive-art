@@ -1,6 +1,6 @@
 
-import React, { useEffect, useState } from "react";
-import {Link} from 'react-router-dom';
+import React from "react";
+// import {Link} from 'react-router-dom';
 import ProjectCard from "./ProjectCard";
 import {Card} from "semantic-ui-react";
 

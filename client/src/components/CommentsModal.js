@@ -5,9 +5,7 @@ import { UserContext } from "./UserProvider";
 function CommentsModal({ open, onClose, update }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  // const { user } = useContext(UserContext); // access user context value
   const [user, setUser] = useContext(UserContext);
-  // console.log(user)
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -18,8 +16,17 @@ function CommentsModal({ open, onClose, update }) {
     fetchComments();
   }, [update.id]);
 
-  const handleDelete = (commentId) => {
-    // to do tommorrow
+  const handleDelete = async (commentId) => {
+    try {
+      const response = await fetch(`/comments/${commentId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setComments(comments.filter((comment) => comment.id !== commentId));
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleEdit = (commentId) => {
@@ -65,10 +72,10 @@ function CommentsModal({ open, onClose, update }) {
     } catch (error) {
       console.error(error);
     }
+    form.reset();
   };
   
-  if (comments && comments.length > 0) {
-  }
+  
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -86,7 +93,7 @@ function CommentsModal({ open, onClose, update }) {
                     <div>{comment.timestamp}</div>
                   </Comment.Metadata>
                   <Comment.Text>{comment.content}</Comment.Text>
-                  {user && user.id === comment.userId && (
+                  {user && user.id === comment.user_id && (
                     <Comment.Actions>
                       <Comment.Action onClick={() => handleEdit(comment.id)}>
                         Edit

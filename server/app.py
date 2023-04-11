@@ -204,6 +204,39 @@ class UpdateComments(Resource):
 
 api.add_resource(UpdateComments,'/update_comments/<int:update_id>')
 
+class CommentsById(Resource):
+    def get(self,id):
+        comment = Comment.query.filter(Comment.id == id).first()
+        comment_dictionary= comment.to_dict()
+
+        if not comment:
+            return make_response(
+                {"error": "Comment not found"},
+                404
+            )
+        else:
+            return make_response(
+                jsonify(comment_dictionary),
+                200
+            )
+    
+    def delete(self, id):
+        comment = Comment.query.filter(Comment.id == id).first()
+        
+        if not comment:
+            return make_response(
+                {"error": "Comment not found"},
+                404
+            )
+        else:
+            db.session.delete(comment)
+            db.session.commit()
+            return make_response(
+                {"message": "Comment deleted successfully"},
+                200
+            )
+        
+api.add_resource(CommentsById, '/comments/<int:id>')
 class Comments(Resource):
     def get(self):
         comments = Comment.query.all()

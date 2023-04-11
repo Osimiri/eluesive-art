@@ -8,7 +8,6 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
-from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # Local imports
 from config import app, db, api
@@ -233,21 +232,6 @@ class Comments(Resource):
 
         return response
 
-    def delete(self, comment_id):
-        comment = Comment.query.filter_by(id=comment_id).first()
-
-        if not comment:
-            return {'message': 'Comment not found'}, 404
-
-        db.session.delete(comment)
-        db.session.commit()
-
-        return make_response(
-            jsonify({'message': 'Comment successfully deleted', 'id':id}),
-            200
-        )
-    
-    @jwt_required
     def patch(self, comment_id):
         comment = Comment.query.get(comment_id)
 
@@ -256,8 +240,7 @@ class Comments(Resource):
             return {'message': 'Comment not found'}, 404
 
         # Check if the user is authorized to update the comment
-        current_user_id = get_jwt_identity()
-        if comment.user_id != current_user_id:
+        if session.get('user_id') != comment.user_id:
             return {'message': 'You are not authorized to update this comment'}, 403
 
         # Update the comment
@@ -274,6 +257,21 @@ class Comments(Resource):
         )
 
         return response
+    
+    def delete(self, comment_id):
+        comment = Comment.query.filter_by(id=comment_id).first()
+
+        if not comment:
+            return {'message': 'Comment not found'}, 404
+
+        db.session.delete(comment)
+        db.session.commit()
+
+        return make_response(
+            jsonify({'message': 'Comment successfully deleted', 'id':id}),
+            200
+        )
+    
         
 api.add_resource(Comments, '/comments')
 

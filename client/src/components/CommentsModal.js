@@ -5,7 +5,9 @@ import { UserContext } from "./UserProvider";
 function CommentsModal({ open, onClose, update }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const { user } = useContext(UserContext); // access user context value
+  // const { user } = useContext(UserContext); // access user context value
+  const [user, setUser] = useContext(UserContext);
+  // console.log(user)
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -17,77 +19,97 @@ function CommentsModal({ open, onClose, update }) {
   }, [update.id]);
 
   const handleDelete = (commentId) => {
-    // handle delete logic
+    // to do tommorrow
   };
 
   const handleEdit = (commentId) => {
-    // handle edit logic
+    // to do tommorrow
   };
 
-  const handleAddComment = async () => {
+  
+
+  const handleAddComment = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    console.log(form)
+    const formData = new FormData(form);
+    const commentContent = formData.get("comment");
+    const newComment = {
+      // id: comments.length + 1,
+      user_id: user.id,
+      update_id: update.id,
+      // username: user.user,
+      avatar: user.image_url,
+      timestamp: new Date().toString(),
+      content: commentContent,
+    };
+
     try {
-      const response = await fetch(`/update_comments/${update.id}`, {
+      const response = await fetch(`/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content: newComment }),
+        body: JSON.stringify({
+          content: newComment.content,
+          user_id: newComment.user_id,
+          update_id: newComment.update_id,
+        }),
       });
       const data = await response.json();
-      setComments([...comments, data.comment]);
+      console.log(data);
+      console.log(comments)
+
+      setComments([...comments, data]);
       setNewComment("");
     } catch (error) {
       console.error(error);
     }
   };
-
-  const handleNewComment = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const commentContent = formData.get("comment");
-    const newComment = {
-      id: comments.length + 1,
-      username: "User",
-      avatar: "https://react.semantic-ui.com/images/avatar/small/matt.jpg",
-      timestamp: new Date().toString(),
-      content: commentContent,
-    };
-    setComments([...comments, newComment]);
-    form.reset();
-  };
+  
+  if (comments && comments.length > 0) {
+  }
 
   return (
     <Modal open={open} onClose={onClose}>
       <Modal.Header>Comments</Modal.Header>
       <Modal.Content>
         <Comment.Group>
-          {comments.map((comment) => (
-            <Comment key={comment.id}>
-              <Comment.Avatar src={comment.avatar} />
-              <Comment.Content>
-                <Comment.Author as="a">{comment.username}</Comment.Author>
-                <Comment.Metadata>
-                  <div>{comment.timestamp}</div>
-                </Comment.Metadata>
-                <Comment.Text>{comment.content}</Comment.Text>
-                {user && user.id === comment.userId && (
-                  <Comment.Actions>
-                    <Comment.Action onClick={() => handleEdit(comment.id)}>Edit</Comment.Action>
-                    <Comment.Action onClick={() => handleDelete(comment.id)}>Delete</Comment.Action>
-                  </Comment.Actions>
-                )}
-              </Comment.Content>
-            </Comment>
-          ))}
+          {comments && comments.length > 0 ? (
+            comments.map((comment) => (
+              // console.log(comment)
+              <Comment key={comment.id}>
+                <Comment.Avatar src={comment.avatar} />
+                <Comment.Content>
+                  <Comment.Author as="a">{comment.username}</Comment.Author>
+                  <Comment.Metadata>
+                    <div>{comment.timestamp}</div>
+                  </Comment.Metadata>
+                  <Comment.Text>{comment.content}</Comment.Text>
+                  {user && user.id === comment.userId && (
+                    <Comment.Actions>
+                      <Comment.Action onClick={() => handleEdit(comment.id)}>
+                        Edit
+                      </Comment.Action>
+                      <Comment.Action onClick={() => handleDelete(comment.id)}>
+                        Delete
+                      </Comment.Action>
+                    </Comment.Actions>
+                  )}
+                </Comment.Content>
+              </Comment>
+            ))
+          ) : (
+            <p>loading...</p>
+          )}
         </Comment.Group>
-        <Form onSubmit={handleNewComment}>
+        <Form onSubmit={handleAddComment}>
           <Form.Group>
-            <Form.Input name="comment" placeholder="Add a comment" />
-            <Form.Button content="Add" />
+            <Form.Input name="comment" placeholder="Leave a comment" />
+            <Form.Button type="submit" content="Add Comment" />
           </Form.Group>
         </Form>
-        {user && (
+        {/* {user && (
           <div>
             <input
               type="text"
@@ -97,7 +119,7 @@ function CommentsModal({ open, onClose, update }) {
             />
             <Button onClick={handleAddComment}>Add Comment</Button>
           </div>
-        )}
+        )} */}
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={onClose}>Close</Button>

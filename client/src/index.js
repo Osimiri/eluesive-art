@@ -7,7 +7,7 @@ import App from "./components/App";
 
 ReactDOM.render(
   <BrowserRouter>
-    <UserProvider> {/* Wrap App with UserProvider */}
+    <UserProvider>
       <App />
     </UserProvider>
   </BrowserRouter>,

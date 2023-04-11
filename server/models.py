@@ -33,6 +33,11 @@ class User(db.Model, SerializerMixin):
         user = User.query.get(user_id)
         return user.username if user else None
 
+    @staticmethod
+    def get_avatar_by_id(user_id):
+        user = User.query.get(user_id)
+        return user.image_url if user else None
+
 
     @hybrid_property
     def password_hash(self):
@@ -75,13 +80,15 @@ class Comment(db.Model, SerializerMixin):
     content = db.Column(db.String)
     timestamp = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
-    
-    
+        
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     update_id = db.Column(db.Integer, db.ForeignKey("updates.id"))
 
     def get_username(self):
         return User.get_username_by_id(self.user_id)
+
+    def get_avatar_by_id(self):
+        return User.get_avatar_by_id(self.user_id)
     # def get_username(self):
     #     return self.user.username
     # def get_username(self):

@@ -8,6 +8,8 @@ function UpdateCard({ title, update, likes, date, image, notes }) {
   const handleCommentsClick = () => {
     setShowCommentsModal(true);
   };
+
+  // console.log(update.comments)
   return (
     <Card>
       <Card.Content>

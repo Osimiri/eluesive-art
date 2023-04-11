@@ -176,9 +176,9 @@ class UpdatesByProjectId(Resource):
 api.add_resource(UpdatesByProjectId, '/project_updates/<int:id>')
 
 
+class UpdateComments(Resource):
 
-@app.route('/update_comments/<int:update_id>')
-def update_page(update_id):
+ def get(self,update_id):
     update = Update.query.get_or_404(update_id)
     comments = update.comments
     return jsonify({
@@ -196,10 +196,13 @@ def update_page(update_id):
             'timestamp': comment.timestamp,
             'user_id': comment.user_id,
             'username': comment.get_username(),
+            'avatar': comment.get_avatar_by_id(),
             'updated_at': comment.updated_at
         } for comment in comments]
     })
+ 
 
+api.add_resource(UpdateComments,'/update_comments/<int:update_id>')
 
 class Comments(Resource):
     def get(self):
@@ -214,23 +217,33 @@ class Comments(Resource):
         return response 
     
     def post(self):
-        content = request.json.get('content')
-        user_id = request.json.get('user_id')
-        update_id = request.json.get('update_id')
+        data = request.get_json()
+        print(data)
+        if not data or not isinstance(data, dict):
+            return {'message': 'Invalid JSON'}, 400
+        
+
+        content = data.get('content')
+        user_id = data.get('user_id')
+        update_id = data.get('update_id')
+        
 
         if not content or not user_id or not update_id:
             return {'message': 'Missing required fields'}, 400
-
+        
         new_comment = Comment(content=content, user_id=user_id, update_id=update_id)
         db.session.add(new_comment)
         db.session.commit()
-
-        response =  make_response(
-            jsonify(new_comment.to_dict()),
-            201
-        )
-
-        return response
+        
+        return jsonify({
+            'id': new_comment.id,
+            'content': new_comment.content,
+            'timestamp': new_comment.timestamp,
+            'user_id': new_comment.user_id,
+            'username': new_comment.get_username(),
+            'avatar': new_comment.get_avatar_by_id(),
+            'updated_at': new_comment.updated_at
+        })
 
     def patch(self, comment_id):
         comment = Comment.query.get(comment_id)

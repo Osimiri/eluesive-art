@@ -235,7 +235,27 @@ class CommentsById(Resource):
                 {"message": "Comment deleted successfully"},
                 200
             )
-        
+    
+    def patch(self, id):
+        comment = Comment.query.filter(Comment.id == id).first()
+
+        if not comment:
+            return make_response(
+                {"error": "Comment not found"},
+                404
+            )
+        else:
+            content = request.json.get('content')
+
+            if content:
+                comment.content = content
+
+            db.session.commit()
+            return make_response(
+                {"message": "Comment updated successfully"},
+                200
+            )
+
 api.add_resource(CommentsById, '/comments/<int:id>')
 class Comments(Resource):
     def get(self):

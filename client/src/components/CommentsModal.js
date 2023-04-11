@@ -6,6 +6,7 @@ function CommentsModal({ open, onClose, update }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [user, setUser] = useContext(UserContext);
+  const [editComment, setEditComment] = useState(null);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -14,6 +15,10 @@ function CommentsModal({ open, onClose, update }) {
       setComments(data.comments);
     };
     fetchComments();
+    // set interval to fetch comments every 5 seconds
+    const intervalId = setInterval(fetchComments, 9000);
+    // clear interval on component unmount
+    return () => clearInterval(intervalId);
   }, [update.id]);
 
   const handleDelete = async (commentId) => {
@@ -29,23 +34,19 @@ function CommentsModal({ open, onClose, update }) {
     }
   };
 
-  const handleEdit = (commentId) => {
-    // to do tommorrow
+  const handleEdit = (comment) => {
+    setEditComment(comment);
   };
-
-  
 
   const handleAddComment = async (event) => {
     event.preventDefault();
     const form = event.target;
-    console.log(form)
+    console.log(form);
     const formData = new FormData(form);
     const commentContent = formData.get("comment");
     const newComment = {
-      // id: comments.length + 1,
       user_id: user.id,
       update_id: update.id,
-      // username: user.user,
       avatar: user.image_url,
       timestamp: new Date().toString(),
       content: commentContent,
@@ -65,7 +66,7 @@ function CommentsModal({ open, onClose, update }) {
       });
       const data = await response.json();
       console.log(data);
-      console.log(comments)
+      console.log(comments);
 
       setComments([...comments, data]);
       setNewComment("");
@@ -74,8 +75,34 @@ function CommentsModal({ open, onClose, update }) {
     }
     form.reset();
   };
-  
-  
+
+  const handleUpdateComment = async (event, comment) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const updatedComment = formData.get("comment");
+
+    try {
+      const response = await fetch(`/comments/${comment.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: updatedComment,
+        }),
+      });
+
+      const data = await response.json();
+      const updatedComments = comments.map((c) =>
+        c.id === comment.id ? data : c
+      );
+      setComments(updatedComments);
+      setEditComment(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -92,10 +119,20 @@ function CommentsModal({ open, onClose, update }) {
                   <Comment.Metadata>
                     <div>{comment.timestamp}</div>
                   </Comment.Metadata>
-                  <Comment.Text>{comment.content}</Comment.Text>
+                  {editComment === comment ? (
+                    <Form onSubmit={(e) => handleUpdateComment(e, comment)}>
+                      <Form.TextArea
+                        name="comment"
+                        defaultValue={comment.content}
+                      />
+                      <Form.Button type="submit" content="Update Comment" />
+                    </Form>
+                  ) : (
+                    <Comment.Text>{comment.content}</Comment.Text>
+                  )}
                   {user && user.id === comment.user_id && (
                     <Comment.Actions>
-                      <Comment.Action onClick={() => handleEdit(comment.id)}>
+                      <Comment.Action onClick={() => handleEdit(comment)}>
                         Edit
                       </Comment.Action>
                       <Comment.Action onClick={() => handleDelete(comment.id)}>
@@ -116,17 +153,6 @@ function CommentsModal({ open, onClose, update }) {
             <Form.Button type="submit" content="Add Comment" />
           </Form.Group>
         </Form>
-        {/* {user && (
-          <div>
-            <input
-              type="text"
-              placeholder="Leave a comment"
-              value={newComment}
-              onChange={(event) => setNewComment(event.target.value)}
-            />
-            <Button onClick={handleAddComment}>Add Comment</Button>
-          </div>
-        )} */}
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={onClose}>Close</Button>

@@ -1,143 +1,31 @@
 import React, { useState } from "react";
-import {
-  Card,
-  Image,
-  Button,
-  Icon,
-  Label,
-  Modal,
-} from "semantic-ui-react";
-// import { NavLink } from "react-router-dom";
+import CommentsModal from "./CommentsModal";
+import { Card, Image, Button } from "semantic-ui-react";
 
 function UpdateCard({ title, update, likes, date, image, notes }) {
-  const [showFront, setShowFront] = useState(true);
   const [showCommentsModal, setShowCommentsModal] = useState(false);
-  const [selectedUpdateComments, setSelectedUpdateComments] = useState([]);
 
-  const toggleCard = () => {
-    setShowFront(!showFront);
+  const handleCommentsClick = () => {
+    setShowCommentsModal(true);
   };
-
-  const handleCommentsModalOpen = async (updateId) => {
-    try {
-      const res = await fetch(`/update_comments/${updateId}`);
-      const data = await res.json();
-      setSelectedUpdateComments(data);
-      setShowCommentsModal(true);
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-      // update state to show error message
-      setSelectedUpdateComments([]);
-      setShowCommentsModal(false);
-      // you could also show a toast or modal with the error message
-    }
-  };
-
-  console.log(selectedUpdateComments);
-
   return (
-    <Card
-      style={{ height: "750px", padding: "15px" }}
-      centered
-      raised
-      className="card-container"
-    >
-      {showFront ? (
-        <>
-          <div className="BookFlic">
-            <Image
-              className="card-image"
-              src={image}
-              alt={title}
-              onClick={toggleCard}
-            />
-          </div>
-          <Card.Content style={{ height: "100px", width: "auto" }}>
-            <Card.Header>{title}</Card.Header>
-            <Card.Meta>
-              <span className="date">Price: Priceless</span>
-            </Card.Meta>
-            <Card.Description>
-              <p>Notes: {notes}</p>
-            </Card.Description>
-          </Card.Content>
-
-          <Button.Group attached="bottom" size="medium">
-            <Button as="div" labelPosition="right">
-              <Button color="brown">
-                <Icon name="heart" />
-              </Button>
-              <Label as="a" basic pointing="left">
-                {likes} Likes!
-              </Label>
-            </Button>
-
-            <Button
-              className="button"
-              attached="right"
-              color="brown"
-              onClick={() => handleCommentsModalOpen(update.id)}
-            >
-              View comments
-            </Button>
-          </Button.Group>
-        </>
-      ) : (
-        <>
-          <Image
-            className="author-card-image"
-            onClick={toggleCard}
-            src={image}
-          />
-          <Card.Content style={{ height: "100px" }}>
-            <Card.Header>{title}</Card.Header>
-            <Card.Description>
-              <p> When Did this Drop? {date}</p>
-            </Card.Description>
-          </Card.Content>
-
-          <Button.Group attached="bottom" size="medium">
-            <Button as="div" labelPosition="right">
-              <Button color="brown">
-                <Icon name="heart" />
-              </Button>
-              <Label as="a" basic pointing="left">
-                {likes} Likes!
-              </Label>
-            </Button>
-
-            <Button
-              className="button"
-              attached="right"
-              color="brown"
-              onClick={() => setShowCommentsModal(true)}
-            >
-              View comments
-            </Button>
-          </Button.Group>
-        </>
-      )}
-
-      <Modal
+    <Card>
+      <Card.Content>
+        <Image
+          className="card-image"
+          src={image}
+          alt={title}
+        />
+        <Card.Header>{update.title}</Card.Header>
+        <Card.Description>{update.content}</Card.Description>
+        <Button onClick={handleCommentsClick}>Comments</Button>
+      </Card.Content>
+      <CommentsModal
         open={showCommentsModal}
         onClose={() => setShowCommentsModal(false)}
-      >
-        <Modal.Header>Comments</Modal.Header>
-        <Modal.Content>
-          {selectedUpdateComments &&
-            selectedUpdateComments.comments &&
-            selectedUpdateComments.comments.map((comment) => (
-              <div key={comment.id}>
-                <p>{comment.username}</p>
-                <p>{comment.content}</p>
-                <p>{comment.timestamp}</p>
-              </div>
-            ))}
-        </Modal.Content>
-        <Modal.Actions>
-          <Button onClick={() => setShowCommentsModal(false)}>Close</Button>
-        </Modal.Actions>
-      </Modal>
+        comments={update.comments}
+        update = {update}
+      />
     </Card>
   );
 }

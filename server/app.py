@@ -8,6 +8,7 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # Local imports
 from config import app, db, api
@@ -212,6 +213,67 @@ class Comments(Resource):
         )
 
         return response 
+    
+    def post(self):
+        content = request.json.get('content')
+        user_id = request.json.get('user_id')
+        update_id = request.json.get('update_id')
+
+        if not content or not user_id or not update_id:
+            return {'message': 'Missing required fields'}, 400
+
+        new_comment = Comment(content=content, user_id=user_id, update_id=update_id)
+        db.session.add(new_comment)
+        db.session.commit()
+
+        response =  make_response(
+            jsonify(new_comment.to_dict()),
+            201
+        )
+
+        return response
+
+    def delete(self, comment_id):
+        comment = Comment.query.filter_by(id=comment_id).first()
+
+        if not comment:
+            return {'message': 'Comment not found'}, 404
+
+        db.session.delete(comment)
+        db.session.commit()
+
+        return make_response(
+            jsonify({'message': 'Comment successfully deleted', 'id':id}),
+            200
+        )
+    
+    @jwt_required
+    def patch(self, comment_id):
+        comment = Comment.query.get(comment_id)
+
+        # Check if the comment exists
+        if not comment:
+            return {'message': 'Comment not found'}, 404
+
+        # Check if the user is authorized to update the comment
+        current_user_id = get_jwt_identity()
+        if comment.user_id != current_user_id:
+            return {'message': 'You are not authorized to update this comment'}, 403
+
+        # Update the comment
+        content = request.json.get('content')
+        if not content:
+            return {'message': 'Missing content field'}, 400
+
+        comment.content = content
+        db.session.commit()
+
+        response = make_response(
+            jsonify(comment.to_dict()),
+            200
+        )
+
+        return response
         
 api.add_resource(Comments, '/comments')
 

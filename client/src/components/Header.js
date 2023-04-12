@@ -30,12 +30,6 @@ function Header({ user, setUser }) {
               </li>
               
               <li style={{ display: 'inline-block', margin: '0 10px' }}>
-                <NavLink exact to="/submit" className="nav-links">
-                  <span className = "nav-text">Submit</span>
-                </NavLink>
-              </li>
-              
-              <li style={{ display: 'inline-block', margin: '0 10px' }}>
                 <NavLink exact to="/profile" className="nav-links">
                   <span className = "nav-text">Profile</span>
                 </NavLink>

@@ -331,17 +331,50 @@ api.add_resource(Comments, '/comments')
 class Projects(Resource):
     def get(self):
         projects = Project.query.all()
-        print(projects[0].users[0].user.username) #a way to find the original person of project
-        projects_dict =  [project.to_dict() for project in projects]
+        projects_dict = [project.to_dict() for project in projects]
 
         response = make_response(
             jsonify(projects_dict),
             200
         )
 
-        return response 
-        
-api.add_resource(Projects, '/projects') 
+        return response
+
+    def post(self):
+        try:
+            data = request.get_json()
+
+            # Extract required fields from data
+            title = data.get('title')
+            image_url = data.get('image_url')
+            description = data.get('description')
+            username = data.get('username')
+
+            # Find user by username
+            user = User.query.filter_by(username=username).first()
+
+            project = Project(
+                title=title,
+                image_url=image_url,
+                description=description,
+                creator=username
+            )
+
+            db.session.add(project)
+            db.session.commit()
+
+            response = make_response(
+                jsonify(project.to_dict()),
+                201
+            )
+
+            return response
+
+        except Exception as e:
+            return {'error': str(e)}, 500
+
+
+api.add_resource(Projects, '/projects')
 
 class ProjectsById(Resource):
     def get(self,id):

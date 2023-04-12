@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import SideBar from "../components/SideBar";
+import SideBar from "./SideBar";
 import ProjectCard from "./ProjectCard";
+import NewProjectModal from "./NewProjectModal";
 import { UserContext } from "./UserProvider";
-import { Button } from "semantic-ui-react";
+import { Button, Modal, Form } from "semantic-ui-react";
 
 function UserProfilePage(props) {
   const [user, setUser] = useContext(UserContext);
   const [projects, setProjects] = useState([]);
   const [profile, setProfile] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const bio = user.biography;
   const full_name = user.full_name;
@@ -23,11 +25,6 @@ function UserProfilePage(props) {
       });
   }, [user.id]);
 
-  // console.log(profile);
-  // console.log(projects);
-
-  
-  
   return (
     <div className="user-profile-page">
       {user && (
@@ -51,8 +48,8 @@ function UserProfilePage(props) {
             profile_pic={profile_pic}
             full_name={full_name}
           />
-
-          <button class="ui button" style={{ display: 'inline-block', margin: '0 10px', float: 'right' }} >Add A New Project</button>
+          
+          <NewProjectModal open={showModal} setOpen={setShowModal} />
         </>
       )}
     </div>

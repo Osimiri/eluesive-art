@@ -2,10 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import Home from "../components/Home";
-import Submit from "../components/Submit";
 import SideBar from "../components/SideBar";
 import Login from "../components/Login";
-import Profile from "../components/Profile";
+import Profile from "./UserProfilePage";
 import ProjectCollection from "../components/ProjectCollection";
 import ProjectPage from "../components/ProjectPage";
 import { UserContext } from "../components/UserProvider";
@@ -34,7 +33,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<ProjectCollection projects={projects} />}/>
-        <Route path="/submit" element={<Submit />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/projects/:projectId" element={<ProjectPage />} />
       </Routes>

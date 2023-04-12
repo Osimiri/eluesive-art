@@ -3,14 +3,18 @@ import { Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import Home from "../components/Home";
 import Submit from "../components/Submit";
+import SideBar from "../components/SideBar";
 import Login from "../components/Login";
+import Profile from "../components/Profile";
 import ProjectCollection from "../components/ProjectCollection";
 import ProjectPage from "../components/ProjectPage";
 import { UserContext } from "../components/UserProvider";
+import { useLocation } from 'react-router-dom';
 
 function App() {
   const [projects, setProjects] = useState([]);
   const [user, setUser] = useContext(UserContext); // using the useContext hook here
+  const location = useLocation(); // declare the location variable using the useLocation hook
 
   useEffect(() => {
     fetch("/projects")
@@ -20,18 +24,18 @@ function App() {
 
   if (!user) return <Login onLogin={setUser} />;
 
-  console.log(user); // logging the user information from the context
+  // console.log(user); // logging the user information from the context
 
   return (
-    <div className="App">
+    <div className="container">
+      {location.pathname.startsWith('/projects/') || location.pathname.startsWith('/profile') ? <SideBar /> : null}
+
       <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/explore"
-          element={<ProjectCollection projects={projects} />}
-        />
+        <Route path="/explore" element={<ProjectCollection projects={projects} />}/>
         <Route path="/submit" element={<Submit />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/projects/:projectId" element={<ProjectPage />} />
       </Routes>
     </div>

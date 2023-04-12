@@ -35,11 +35,18 @@ function Header({ user, setUser }) {
                 </NavLink>
               </li>
               
+              <li style={{ display: 'inline-block', margin: '0 10px' }}>
+                <NavLink exact to="/profile" className="nav-links">
+                  <span className = "nav-text">Profile</span>
+                </NavLink>
+              </li>
+
               <li style={{ display: 'inline-block', margin: '0 10px', float: 'right' }}>
                 <NavLink exact to="/" onClick={handleLogoutClick} className="nav-links">
                   <span className = "nav-text">LogOut</span>
                 </NavLink>
               </li>
+              
 
             </ul>
           </div>

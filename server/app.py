@@ -13,19 +13,6 @@ from flask_cors import CORS
 from config import app, db, api
 from models import Comment, Update, User, Project, UserProject
 
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.json.compact = False
-
-# migrate = Migrate(app, db)
-
-# db.init_app(app)
-
-# api = Api(app)
-
-# Views go here!
-
 @app.route('/')
 def index():
     return '<h1> Dont let your Art Elude you </h1>'

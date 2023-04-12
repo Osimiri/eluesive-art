@@ -9,6 +9,7 @@ function Home() {
           {/* <div className = "header">
             <img className ="logo" src = "Better.jpg" alt = "logo" />
         </div> */}
+        
         <div>
           <h1>Eluesive Art</h1>
           <h1>Eluesive Art</h1>

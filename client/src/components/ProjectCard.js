@@ -112,24 +112,5 @@ function ProjectCard({
   );
 }
 
-// function ProjectCard({ title, likes, image, description, users }) {
-//     return (
-//       <Card>
-//         <Card.Content>
-//           <Card.Header>{title}</Card.Header>
-//           <Card.Description>{description}</Card.Description>
-//           <Card.Meta>
-//             Creator: {users[0].username}
-//           </Card.Meta>
-//           <Card.Meta>
-//             Likes: {likes}
-//           </Card.Meta>
-//         </Card.Content>
-//         <Card.Content extra>
-//           {/* <Link to="/project-details">View Project</Link> */}
-//         </Card.Content>
-//       </Card>
-//     );
-//   }
 
 export default ProjectCard;

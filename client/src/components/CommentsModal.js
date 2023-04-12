@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Modal, Comment, Button, Form } from "semantic-ui-react";
 import { UserContext } from "./UserProvider";
 
+
 function CommentsModal({ open, onClose, update }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -15,10 +16,10 @@ function CommentsModal({ open, onClose, update }) {
       setComments(data.comments);
     };
     fetchComments();
-    // set interval to fetch comments every 5 seconds
-    const intervalId = setInterval(fetchComments, 9000);
-    // clear interval on component unmount
-    return () => clearInterval(intervalId);
+    // set interval to fetch comments every 9 seconds
+    // const intervalId = setInterval(fetchComments, 9000);
+    // clear interval on component
+    // return () => clearInterval(intervalId);
   }, [update.id]);
 
   const handleDelete = async (commentId) => {
@@ -144,7 +145,7 @@ function CommentsModal({ open, onClose, update }) {
               </Comment>
             ))
           ) : (
-            <p>loading...</p>
+            <p>Be the first to comment.</p>
           )}
         </Comment.Group>
         <Form onSubmit={handleAddComment}>

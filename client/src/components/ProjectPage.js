@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UpdateCard from "./UpdateCard";
+import SideBar from "../components/SideBar";
 
 function ProjectPage() {
   const { projectId } = useParams(); // get id parameter from URL
@@ -19,12 +20,13 @@ function ProjectPage() {
       .then((res) => res.json())
       .then((data) => setUpdates(data));
   }, [projectId]);
+  
 
   if (!project) {
     return <div>Loading...</div>;
   }
 
-  return (
+  return (  
     <div>
       <h1>{project.title}</h1>
       <p>Creator: {project.creator}</p>

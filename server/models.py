@@ -15,7 +15,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-user_projects', '-projects.user', '-projects.id','-projects.project_id', '-projects.user_id' )
+    serialize_rules = ('-project', )
 
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String)
@@ -25,9 +25,7 @@ class User(db.Model, SerializerMixin):
     biography = db.Column(db.String)
     image_url = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
-
-    projects = db.relationship("UserProject", backref = "user")
-
+    
     @staticmethod
     def get_username_by_id(user_id):
         user = User.query.get(user_id)
@@ -59,7 +57,7 @@ class User(db.Model, SerializerMixin):
 class Update(db.Model, SerializerMixin):
     __tablename__ = 'updates'
 
-    serialize_rules = ('-user_projects','-project', '-comments')
+    serialize_rules = ('-project', '-comments')
 
     id = db.Column(db.Integer, primary_key=True)
     notes = db.Column(db.String)
@@ -89,16 +87,11 @@ class Comment(db.Model, SerializerMixin):
 
     def get_avatar_by_id(self):
         return User.get_avatar_by_id(self.user_id)
-    # def get_username(self):
-    #     return self.user.username
-    # def get_username(self):
-    #     user = User.query.get(self.user_id)
-    #     return user.username if user else None
 
 class Project(db.Model, SerializerMixin):
     __tablename__ = 'projects'
 
-    serialize_rules = ('-user_projects','-users.project', '-projects.user') #'-users.user' will get rid of user info on project
+    # serialize_rules = ('-users.project', '-projects.user') #'-users.user' will get rid of user info on project
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)  
@@ -109,14 +102,7 @@ class Project(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
     
-    users = db.relationship("UserProject", backref = "project")
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship("User", backref = "project")
     
-
-class UserProject(db.Model, SerializerMixin):
-    __tablename__ = 'user_projects'
-
-    serialize_rules = ('-project.users', '-user.projects','-user_id')
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column( db.Integer, db.ForeignKey('users.id'))
-    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
+    

@@ -56,7 +56,7 @@ function ProjectCard({
                 </Card.Content>
               </Card.Description>
             </Card.Content>
-            <Button.Group attached="bottom" size="medium">
+            {/* <Button.Group attached="bottom" size="medium">
               <Button as="div" labelPosition="right">
                 <Button color="brown">
                   <Icon name="heart" />
@@ -74,7 +74,7 @@ function ProjectCard({
               >
                 Delete
               </Button>
-            </Button.Group>
+            </Button.Group> */}
           </>
         ) : (
           <>
@@ -87,7 +87,7 @@ function ProjectCard({
               <Card.Header>{title}</Card.Header>
               <Card.Description></Card.Description>
             </Card.Content>
-            <Button.Group attached="bottom" size="medium">
+            {/* <Button.Group attached="bottom" size="medium">
               <Button as="div" labelPosition="right">
                 <Button color="brown">
                   <Icon name="heart" />
@@ -105,7 +105,7 @@ function ProjectCard({
               >
                 Delete
               </Button>
-            </Button.Group>
+            </Button.Group> */}
           </>
         )}
       </Card>

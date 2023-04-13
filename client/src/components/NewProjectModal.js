@@ -36,7 +36,7 @@ const handleSubmit = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        // handleClose();
+        handleClose();
       })
       .catch((err) => console.error(err));
   };

@@ -9,7 +9,7 @@ from faker import Faker
 from faker.providers import  profile, isbn, internet   
 # Local imports
 from app import app
-from models import Comment, Update, User, Project, UserProject, db
+from models import Comment, Update, User, Project, db
 
 fake = Faker()
 fake.add_provider(profile)
@@ -40,24 +40,13 @@ def make_user():
     db.session.commit()
 
 
-def make_userProject():
-    UserProject.query.delete()
-
-    user_project_obj = [
-        UserProject(user_id = 1, project_id = 1),
-        UserProject(user_id = 2, project_id = 2)
-    ]
-    
-    db.session.add_all(user_project_obj)
-    db.session.commit()
-
 def make_project():
     
     Project.query.delete()
   
     project_obj = [
-        Project(title = "test project", likes = 2, image_url = 'https://pbs.twimg.com/media/EeFwGoCUYAEWRr6.png' ,description = "Lorem Ipsum" , creator = db.session.get(User,1).username),
-        Project(title = "Other project", likes = 20, image_url = 'https://pbs.twimg.com/media/EeFwGoCUYAEWRr6.png' ,description = "Lorem Ipsum", creator = db.session.get(User,2).username)
+        Project(title = "test project", likes = 2, image_url = 'https://pbs.twimg.com/media/EeFwGoCUYAEWRr6.png' ,description = "Lorem Ipsum" , creator = db.session.get(User,1).username, user_id = '1'),
+        Project(title = "Other project", likes = 20, image_url = 'https://pbs.twimg.com/media/EeFwGoCUYAEWRr6.png' ,description = "Lorem Ipsum", creator = db.session.get(User,2).username, user_id = '2')
         ]
     
     db.session.add_all(project_obj)
@@ -114,8 +103,7 @@ if __name__ == '__main__':
         make_project()
         make_comment()
         make_update()
-        make_userProject()
-
+    
 
         project = db.session.get(Project,1)
         print(project)

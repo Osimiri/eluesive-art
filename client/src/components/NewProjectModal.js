@@ -2,30 +2,30 @@ import React, { useState, useContext } from "react";
 import { Button, Modal, Form } from "semantic-ui-react";
 import { UserContext } from "./UserProvider";
 
-function NewProjectModal(props) {
+function NewProjectModal({refreshProject, refreshExplore}) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
   const [user, setUser] = useContext(UserContext);
 
-  console.log(user.username)
-  console.log(user)
-  console.log(title)
+  // console.log(user.username)
+  // console.log(user)
+  // console.log(title)
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-//   TRY TO POST TO THE USERPROJECTS INSTEAD. POST WORKS BUT DOESNT CONNECT USER
-const handleSubmit = () => {
+  //   TRY TO POST TO THE USERPROJECTS INSTEAD. POST WORKS BUT DOESNT CONNECT USER
+  const handleSubmit = () => {
     const newProject = {
       title: title,
       image_url: imageUrl,
       description: description,
       creator: user.username,
-      user_id: user.id 
+      user_id: user.id,
     };
-  
+    console.log(newProject);
     fetch("/projects", {
       method: "POST",
       headers: {
@@ -36,18 +36,31 @@ const handleSubmit = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        refreshProject();
+        refreshExplore();
         handleClose();
       })
       .catch((err) => console.error(err));
   };
 
-  
   return (
     <Modal
       onClose={handleClose}
       onOpen={handleOpen}
       open={open}
-      trigger={<Button style={{ display: "inline-block", margin: "0 10px", float: "right" }}>Create Project</Button>}
+      // trigger={<Button style={{ display: "inline-block", margin: "0 10px", float: "right" }}>Create Project</Button>}
+      trigger={
+        <Button
+          style={{
+            position: "fixed",
+            top: "70px",
+            right: "30px",
+            margin: "0",
+          }}
+        >
+          Create Project
+        </Button>
+      }
     >
       <Modal.Header>Create a new project</Modal.Header>
       <Modal.Content>

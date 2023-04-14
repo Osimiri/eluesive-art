@@ -11,15 +11,21 @@ import { UserContext } from "../components/UserProvider";
 import { useLocation } from 'react-router-dom';
 
 function App() {
-  const [projects, setProjects] = useState([]);
   const [user, setUser] = useContext(UserContext); // using the useContext hook here
   const location = useLocation(); // declare the location variable using the useLocation hook
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     fetch("/projects")
       .then((res) => res.json())
       .then((data) => setProjects(data));
   }, []);
+
+  function refreshExplore(){
+    fetch("/projects")
+      .then((res) => res.json())
+      .then((data) => setProjects(data));
+  }
 
   if (!user) return <Login onLogin={setUser} />;
 
@@ -33,7 +39,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<ProjectCollection projects={projects} />}/>
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile refreshExplore = {refreshExplore} />} />
         <Route path="/projects/:projectId" element={<ProjectPage />} />
       </Routes>
     </div>

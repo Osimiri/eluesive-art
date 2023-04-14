@@ -11,7 +11,7 @@ from flask_cors import CORS
 
 # Local imports
 from config import app, db, api
-from models import Comment, Update, User, Project, UserProject
+from models import Comment, Update, User, Project
 
 @app.route('/')
 def index():
@@ -338,8 +338,9 @@ class Projects(Resource):
             200
         )
 
+        
         return response
-
+    
     def post(self):
         try:
             data = request.get_json()
@@ -349,6 +350,7 @@ class Projects(Resource):
             image_url = data.get('image_url')
             description = data.get('description')
             username = data.get('username')
+            user_id = data.get('user_id')
 
             # Find user by username
             user = User.query.filter_by(username=username).first()
@@ -357,7 +359,8 @@ class Projects(Resource):
                 title=title,
                 image_url=image_url,
                 description=description,
-                creator=username
+                creator=username,
+                user_id= user_id
             )
 
             db.session.add(project)
@@ -372,7 +375,6 @@ class Projects(Resource):
 
         except Exception as e:
             return {'error': str(e)}, 500
-
 
 api.add_resource(Projects, '/projects')
 
@@ -394,37 +396,51 @@ class ProjectsById(Resource):
         
 api.add_resource(ProjectsById, '/projects/<int:id>')
 
-class UserProjects(Resource):
-    def get(self):
-        user_projects = UserProject.query.all()
-        user_projects_dict =  [user_project.to_dict() for user_project in user_projects]
+class ProjectsUserId(Resource):
+    
+    def get(self, id):
+        projects = Project.query.filter_by(user_id=id).all()
+        projects_dict = [project.to_dict() for project in projects]
 
         response = make_response(
-            jsonify(user_projects_dict),
+            jsonify(projects_dict),
             200
         )
 
-        return response 
-        
-api.add_resource(UserProjects, '/user_projects') 
+        return response
+api.add_resource(ProjectsUserId, '/projects_user/<int:id>')
 
-class UserProjectsById(Resource):
-    def get(self,id):
-        user_project = UserProject.query.filter(UserProject.id == id).first()
-        user_project_dictionary= user_project.to_dict()
+# class UserProjects(Resource):
+#     def get(self):
+#         user_projects = UserProject.query.all()
+#         user_projects_dict =  [user_project.to_dict() for user_project in user_projects]
 
-        if not user_project:
-            return make_response(
-                {"error": "User not found"},
-                404
-            )
-        else:
-            return make_response(
-                jsonify(user_project_dictionary),
-                200
-            )
+#         response = make_response(
+#             jsonify(user_projects_dict),
+#             200
+#         )
+
+#         return response 
         
-api.add_resource(UserProjectsById, '/user_projects/<int:id>')
+# api.add_resource(UserProjects, '/user_projects') 
+
+# class UserProjectsById(Resource):
+#     def get(self,id):
+#         user_project = UserProject.query.filter(UserProject.id == id).first()
+#         user_project_dictionary= user_project.to_dict()
+
+#         if not user_project:
+#             return make_response(
+#                 {"error": "User not found"},
+#                 404
+#             )
+#         else:
+#             return make_response(
+#                 jsonify(user_project_dictionary),
+#                 200
+#             )
+        
+# api.add_resource(UserProjectsById, '/user_projects/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -3,43 +3,46 @@ import SideBar from "./SideBar";
 import ProjectCard from "./ProjectCard";
 import NewProjectModal from "./NewProjectModal";
 import { UserContext } from "./UserProvider";
-import { Button, Modal, Form } from "semantic-ui-react";
 
-function UserProfilePage(props) {
+function UserProfilePage({refreshExplore}) {
   const [user, setUser] = useContext(UserContext);
   const [projects, setProjects] = useState([]);
-  const [profile, setProfile] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const bio = user.biography;
   const full_name = user.full_name;
   const profile_pic = user.image_url;
   const username = user.username;
-
+  
   useEffect(() => {
-    fetch(`/users/${user.id}`)
+    fetch(`/projects_user/${user.id}`)
       .then((res) => res.json())
-      .then((data) => {
-        setProfile(data);
-        setProjects(data.projects.map((projects) => projects.project));
-      });
-  }, [user.id]);
+      .then((data) => setProjects(data));
+  }, []);
+
+  // Function so page rerenders on post
+  function refreshProject(){
+      fetch(`/projects_user/${user.id}`)
+        .then((res) => res.json())
+        .then((data) => setProjects(data));
+  }
+  
 
   return (
     <div className="user-profile-page">
       {user && (
         <>
-          {projects.length > 0 && (
+          {projects.map((project) => (
             <ProjectCard
-              projectId={projects.id}
-              title={projects.title}
-              users={projects.users.map((user) => user.user)}
-              likes={projects.likes}
-              image={projects.image_url}
-              description={projects.description}
-              creator={projects.creator}
+              key={project.id}
+              // projectId={project.id}
+              title={project.title}
+              likes={project.likes}
+              image={project.image_url}
+              description={project.description}
+              creator={project.creator}
             />
-          )}
+          ))}
 
           <SideBar
             user={user}
@@ -49,7 +52,7 @@ function UserProfilePage(props) {
             full_name={full_name}
           />
           
-          <NewProjectModal open={showModal} setOpen={setShowModal} />
+          <NewProjectModal open={showModal} setOpen={setShowModal} refreshProject= {refreshProject} refreshExplore = {refreshExplore} />
         </>
       )}
     </div>

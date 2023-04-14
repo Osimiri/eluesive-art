@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button, Modal, Form } from "semantic-ui-react";
 import { UserContext } from "./UserProvider";
 
-function NewProjectModal({refreshProject}) {
+function NewProjectModal({refreshProject, refreshExplore}) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -36,7 +36,8 @@ function NewProjectModal({refreshProject}) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        refreshProject()
+        refreshProject();
+        refreshExplore();
         handleClose();
       })
       .catch((err) => console.error(err));

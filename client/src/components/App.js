@@ -21,6 +21,12 @@ function App() {
       .then((data) => setProjects(data));
   }, []);
 
+  function refreshExplore(){
+    fetch("/projects")
+      .then((res) => res.json())
+      .then((data) => setProjects(data));
+  }
+
   if (!user) return <Login onLogin={setUser} />;
 
   // console.log(user); // logging the user information from the context
@@ -33,7 +39,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<ProjectCollection projects={projects} />}/>
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile refreshExplore = {refreshExplore} />} />
         <Route path="/projects/:projectId" element={<ProjectPage />} />
       </Routes>
     </div>

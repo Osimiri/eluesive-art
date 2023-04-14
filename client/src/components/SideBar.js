@@ -21,7 +21,7 @@ function Sidebar({bio,username,profile_pic, full_name, user}) {
         <Header as='h2'>Bio</Header>
         <p>{bio}</p>
       </Container>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> */}
     </div>
   );
 }

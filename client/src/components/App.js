@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import Header from "../components/Header";
 import Home from "../components/Home";
 import SideBar from "../components/SideBar";
 import Login from "../components/Login";
 import Profile from "./UserProfilePage";
+import ProfilePage from "./ProfilePage";
 import ProjectCollection from "../components/ProjectCollection";
 import ProjectPage from "../components/ProjectPage";
 import { UserContext } from "../components/UserProvider";
-import { useLocation } from 'react-router-dom';
 
 function App() {
   const [user, setUser] = useContext(UserContext); // using the useContext hook here
@@ -40,6 +41,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<ProjectCollection projects={projects} />}/>
         <Route path="/profile" element={<Profile refreshExplore = {refreshExplore} />} />
+        <Route path="/profile/:userId" element={<ProfilePage />} />
         <Route path="/projects/:projectId" element={<ProjectPage />} />
       </Routes>
     </div>

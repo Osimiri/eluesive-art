@@ -21,6 +21,15 @@ class User(db.Model, SerializerMixin):
     image_url = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     
+    # Validate url ending in png
+    @validates('image_url')
+    def validate_content(self, key, value):
+        if not value:
+            raise ValueError('Content cannot be empty')
+        if not (value.endswith(".png") or value.endswith(".jpg")):
+            raise ValueError('Image URL must end with .png')
+        return value
+
     @staticmethod
     def get_username_by_id(user_id):
         user = User.query.get(user_id)

@@ -340,6 +340,41 @@ class Projects(Resource):
 
         
         return response
+    
+    def post(self):
+        try:
+            data = request.get_json()
+
+            # Extract required fields from data
+            title = data.get('title')
+            image_url = data.get('image_url')
+            description = data.get('description')
+            username = data.get('username')
+            user_id = data.get('user_id')
+
+            # Find user by username
+            user = User.query.filter_by(username=username).first()
+
+            project = Project(
+                title=title,
+                image_url=image_url,
+                description=description,
+                creator=username,
+                user_id= user_id
+            )
+
+            db.session.add(project)
+            db.session.commit()
+
+            response = make_response(
+                jsonify(project.to_dict()),
+                201
+            )
+
+            return response
+
+        except Exception as e:
+            return {'error': str(e)}, 500
 
 api.add_resource(Projects, '/projects')
 

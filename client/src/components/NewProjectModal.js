@@ -9,9 +9,9 @@ function NewProjectModal(props) {
   const [description, setDescription] = useState("");
   const [user, setUser] = useContext(UserContext);
 
-  console.log(user.username)
-  console.log(user)
-  console.log(title)
+  // console.log(user.username)
+  // console.log(user)
+  // console.log(title)
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -23,9 +23,9 @@ const handleSubmit = () => {
       image_url: imageUrl,
       description: description,
       creator: user.username,
-      user_id: user.id 
+      user_id: user.id
     };
-  
+    console.log(newProject);
     fetch("/projects", {
       method: "POST",
       headers: {

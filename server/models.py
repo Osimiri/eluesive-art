@@ -7,11 +7,6 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from config import db, bcrypt
 
 # db = SQLAlchemy(metadata= MetaData())
-
-# Models go here!
-
-
-
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 

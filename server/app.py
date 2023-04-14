@@ -396,6 +396,52 @@ class ProjectsById(Resource):
         
 api.add_resource(ProjectsById, '/projects/<int:id>')
 
+class ProjectsUserId(Resource):
+    
+    def get(self, id):
+        projects = Project.query.filter_by(user_id=id).all()
+        projects_dict = [project.to_dict() for project in projects]
+
+        response = make_response(
+            jsonify(projects_dict),
+            200
+        )
+
+        return response
+api.add_resource(ProjectsUserId, '/projects_user/<int:id>')
+
+# class UserProjects(Resource):
+#     def get(self):
+#         user_projects = UserProject.query.all()
+#         user_projects_dict =  [user_project.to_dict() for user_project in user_projects]
+
+#         response = make_response(
+#             jsonify(user_projects_dict),
+#             200
+#         )
+
+#         return response 
+        
+# api.add_resource(UserProjects, '/user_projects') 
+
+# class UserProjectsById(Resource):
+#     def get(self,id):
+#         user_project = UserProject.query.filter(UserProject.id == id).first()
+#         user_project_dictionary= user_project.to_dict()
+
+#         if not user_project:
+#             return make_response(
+#                 {"error": "User not found"},
+#                 404
+#             )
+#         else:
+#             return make_response(
+#                 jsonify(user_project_dictionary),
+#                 200
+#             )
+        
+# api.add_resource(UserProjectsById, '/user_projects/<int:id>')
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
     

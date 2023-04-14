@@ -11,9 +11,9 @@ import { UserContext } from "../components/UserProvider";
 import { useLocation } from 'react-router-dom';
 
 function App() {
-  const [projects, setProjects] = useState([]);
   const [user, setUser] = useContext(UserContext); // using the useContext hook here
   const location = useLocation(); // declare the location variable using the useLocation hook
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     fetch("/projects")

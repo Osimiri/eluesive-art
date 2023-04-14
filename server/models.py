@@ -76,6 +76,14 @@ class Comment(db.Model, SerializerMixin):
         
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     update_id = db.Column(db.Integer, db.ForeignKey("updates.id"))
+    
+    @validates('content')
+    def validate_content(self, key, value):
+        if not value:
+            raise ValueError('Content cannot be empty')
+        if len(value) > 1000:
+            raise ValueError('Content is too long')
+        return value
 
     def get_username(self):
         return User.get_username_by_id(self.user_id)
@@ -99,5 +107,3 @@ class Project(db.Model, SerializerMixin):
     
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship("User", backref = "project")
-    
-    

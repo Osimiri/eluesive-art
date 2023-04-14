@@ -338,6 +338,7 @@ class Projects(Resource):
             200
         )
 
+        
         return response
 
 api.add_resource(Projects, '/projects')

@@ -7,9 +7,9 @@ import {Card} from "semantic-ui-react";
 // COLLECT ALL PROJECTS OR DOA  FETCH TO SPECIFY TO USER
 
 
-function ProjectCollection({projects}){
+function ProjectCollection({projects, refreshExplore}){
   const projectCards = projects.map((project)=> {
-      console.log(project.creator)
+      // console.log(project.creator)
       console.log(project)
 
       return (
@@ -20,6 +20,7 @@ function ProjectCollection({projects}){
         image = {project.image_url}
         description = {project.description}
         creator = {project.creator}
+        refreshExplore = {refreshExplore}
         project = {project}
       />
     );

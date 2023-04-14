@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .nav-container {
   background-color: #ffffff;
   height: 70px;
@@ -50,11 +49,11 @@
   color: #0073d3;
 }
 
-.nav-text{
+.nav-text {
   font-size: 23px;
 }
-*{
-  font-family: 'Plus Jakarta Sans', sans-serif;
+* {
+  font-family: "Plus Jakarta Sans", sans-serif;
   /* font-weight: bolder; */
 }
 
@@ -71,6 +70,5 @@
 
 .container {
   position: relative;
-  margin-left: 300px;
-  margin-top: 70px; /* adjust the width based on your sidebar */
+  margin-left: 300px; /* adjust the width based on your sidebar */
 }

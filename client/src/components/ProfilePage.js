@@ -19,7 +19,7 @@ function UserProfilePage() {
       .then((data) => setUser(data));
   }, [userId]);
 
-  console.log(user)
+  console.log(user);
 
   useEffect(() => {
     fetch(`/projects_user/${user.id}`)

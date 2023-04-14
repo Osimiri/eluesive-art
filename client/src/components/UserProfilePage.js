@@ -4,7 +4,7 @@ import ProjectCard from "./ProjectCard";
 import NewProjectModal from "./NewProjectModal";
 import { UserContext } from "./UserProvider";
 
-function UserProfilePage({refreshExplore}) {
+function UserProfilePage({ refreshExplore }) {
   const [user, setUser] = useContext(UserContext);
   const [projects, setProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +13,7 @@ function UserProfilePage({refreshExplore}) {
   const full_name = user.full_name;
   const profile_pic = user.image_url;
   const username = user.username;
-  
+
   useEffect(() => {
     fetch(`/projects_user/${user.id}`)
       .then((res) => res.json())
@@ -22,12 +22,10 @@ function UserProfilePage({refreshExplore}) {
 
   // Function so page rerenders on post
   function refreshProject(){
-      fetch(`/projects_user/${user.id}`)
-        .then((res) => res.json())
-        .then((data) => setProjects(data));
-  }
-  
-
+    fetch(`/projects_user/${user.id}`)
+      .then((res) => res.json())
+      .then((data) => setProjects(data));
+}
   return (
     <div className="user-profile-page">
       {user && (
@@ -36,11 +34,16 @@ function UserProfilePage({refreshExplore}) {
             <ProjectCard
               key={project.id}
               projectId={project.id}
+              project={project}
               title={project.title}
               likes={project.likes}
               image={project.image_url}
               description={project.description}
               creator={project.creator}
+              setProjects ={setProjects}
+              projects = {projects}
+              refreshExplore={refreshExplore}
+              refreshProject = {refreshProject}
             />
           ))}
 
@@ -51,8 +54,14 @@ function UserProfilePage({refreshExplore}) {
             profile_pic={profile_pic}
             full_name={full_name}
           />
-          
-          <NewProjectModal open={showModal} setOpen={setShowModal} refreshProject= {refreshProject} refreshExplore = {refreshExplore} />
+
+          <NewProjectModal
+            open={showModal}
+            setOpen={setShowModal}
+            refreshExplore={refreshExplore}
+            refreshProject = {refreshProject}
+            setProjects = {setProjects}
+          />
         </>
       )}
     </div>

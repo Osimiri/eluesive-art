@@ -20,13 +20,12 @@ function ProjectPage() {
       .then((res) => res.json())
       .then((data) => setUpdates(data));
   }, [projectId]);
-  
 
   if (!project) {
     return <div>Loading...</div>;
   }
 
-  return (  
+  return (
     <div>
       <h1>{project.title}</h1>
       <p>Creator: {project.creator}</p>

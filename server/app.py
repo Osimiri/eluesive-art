@@ -381,19 +381,30 @@ api.add_resource(Projects, '/projects')
 class ProjectsById(Resource):
     def get(self,id):
         project = Project.query.filter(Project.id == id).first()
-        project_dictionary= project.to_dict()
-
         if not project:
             return make_response(
                 {"error": "Project not found"},
                 404
             )
-        else:
+        project_dictionary= project.to_dict()
+        return make_response(
+            jsonify(project_dictionary),
+            200
+        )
+
+    def delete(self, id):
+        project = Project.query.filter(Project.id == id).first()
+        if not project:
             return make_response(
-                jsonify(project_dictionary),
-                200
+                {"error": "Project not found"},
+                404
             )
-        
+        db.session.delete(project)
+        db.session.commit()
+        return make_response(
+            {"message": f"Project with id {id} deleted successfully"},
+            200
+        )
 api.add_resource(ProjectsById, '/projects/<int:id>')
 
 class ProjectsUserId(Resource):

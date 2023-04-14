@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button, Modal, Form } from "semantic-ui-react";
 import { UserContext } from "./UserProvider";
 
-function NewProjectModal({refreshProject, refreshExplore}) {
+function NewProjectModal({ refreshExplore, setProjects, refreshProject }) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -16,7 +16,6 @@ function NewProjectModal({refreshProject, refreshExplore}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  //   TRY TO POST TO THE USERPROJECTS INSTEAD. POST WORKS BUT DOESNT CONNECT USER
   const handleSubmit = () => {
     const newProject = {
       title: title,
@@ -36,8 +35,9 @@ function NewProjectModal({refreshProject, refreshExplore}) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        refreshProject();
+        // setProjects((projects) => [projects,...data])
         refreshExplore();
+        refreshProject();
         handleClose();
       })
       .catch((err) => console.error(err));

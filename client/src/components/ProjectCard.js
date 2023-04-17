@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Card, Image, Button} from "semantic-ui-react";
+import { Card, Image, Button } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "./UserProvider";
 
@@ -11,8 +11,7 @@ function ProjectCard({
   creator,
   projectId,
   refreshProject,
-  refreshExplore
-
+  refreshExplore,
 }) {
   const [showFront, setShowFront] = useState(true);
   const [user, setUser] = useContext(UserContext);
@@ -30,8 +29,8 @@ function ProjectCard({
         method: "DELETE",
       });
       if (response.ok) {
-        refreshExplore()
-        refreshProject()
+        refreshExplore();
+        refreshProject();
         // loop over projects and filter for ones that dont have the id of selected one then use setPrtojects again
         console.log("Project Sucesfully Deleted");
       } else {
@@ -44,57 +43,47 @@ function ProjectCard({
 
   return (
     <Card
-      style={{ height: "750px", padding: "15px" }}
+      style={{ height: "auto", padding: "10px", width: "500px" }}
       centered
       raised
       className="card-container"
     >
-      {showFront ? (
-        <>
-          <div className="BookFlic">
-            <Image
-              className="card-image"
-              src={image}
-              alt={title}
-              onClick={toggleCard}
-            />
-          </div>
-          <Card.Content style={{ height: "100px", width: "auto" }}>
-            <Card.Header>{title}</Card.Header>
+      <>
+        <div className="ProjectFlic">
+          <Image
+            className="card-image"
+            src={image}
+            alt={title}
+            onClick={toggleCard}
+          />
+        </div>
+        <div className="card-info">
+          <Card.Content style={{ height: "auto", width: "auto" }}>
+            <Card.Header>Title: {title}</Card.Header>
             <Card.Meta>
               <span className="date">Price: Priceless</span>
             </Card.Meta>
-            <Card.Description>
-              {<p>Description: {description}</p>}
-              <p>Creator: {creator}</p>
-              {/* <p>Collaborators: {users[0].username}</p> */}
-              <Card.Content extra>
-                <NavLink to={`/projects/${projectId}`}>View Project</NavLink>
-                {/* ^^^^^^^^^CHANGE THIS SO IT RENDERS TO A UNIQUE PROJECT PAGE ^^^^^^^^  */}
-              </Card.Content>
-            </Card.Description>
+                  <NavLink to={`/projects/${projectId}`}>View Project</NavLink>
+            <div className="card-description-hover">
+              <Card.Description>
+                <p>Creator: {creator}</p>
+                {<p>Description: {description}</p>}
+                <Card.Content extra>
+                </Card.Content>
+              </Card.Description>
+            </div>
           </Card.Content>
-          {user && user.id === project.user_id && (
-            // <Button.Group attached="bottom" size="medium">
-              <Button className="button" color="brown" onClick={() => handleDelete()}>
-                Delete
-              </Button>
-            // </Button.Group>
-          )}
-        </>
-      ) : (
-        <>
-          <Image
-            className="author-card-image"
-            onClick={toggleCard}
-            src={image}
-          />
-          <Card.Content style={{ height: "100px" }}>
-            <Card.Header>{title}</Card.Header>
-            <Card.Description></Card.Description>
-          </Card.Content>
-        </>
-      )}
+        </div>
+        {user && user.id === project.user_id && (
+          <Button
+            className="button"
+            color="brown"
+            onClick={() => handleDelete()}
+          >
+            Delete
+          </Button>
+        )}
+      </>
     </Card>
   );
 }

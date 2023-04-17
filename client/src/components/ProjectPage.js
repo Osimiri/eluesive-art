@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UpdateCard from "./UpdateCard";
-import SideBar from "../components/SideBar";
 
 function ProjectPage() {
   const { projectId } = useParams(); // get id parameter from URL

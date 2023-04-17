@@ -24,7 +24,7 @@ function Home() {
                 <p class="text-left text-3xl pr-10 mt-40 ">Eluesive Art is a platform designed to help artists stay productive, motivated, and engaged with their creative process. Whether you're looking for feedback, support, or inspiration, our community is here to help you achieve your artistic goals.</p>
               </div>
               <div>
-                <img class="flex-1 w-auto" src="https://i.pinimg.com/originals/3a/80/36/3a80363ad681b4f6a79276c85f81ccb0.jpg"></img>
+                <img class="flex-1 w-auto" src="https://i.pinimg.com/originals/3a/80/36/3a80363ad681b4f6a79276c85f81ccb0.jpg" alt=""></img>
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@ function Home() {
                     Let's create something beautiful together!</p>
               </div>
               <div>
-                <img class="flex-1 w-auto" src="https://i.pinimg.com/originals/3a/80/36/3a80363ad681b4f6a79276c85f81ccb0.jpg"></img>
+                <img class="flex-1 w-auto" src="https://i.pinimg.com/originals/3a/80/36/3a80363ad681b4f6a79276c85f81ccb0.jpg" alt=""></img>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@ function Home() {
                   </div>
           
                   <div>
-                    <img class="flex-1 w-auto" src="https://i.pinimg.com/originals/3a/80/36/3a80363ad681b4f6a79276c85f81ccb0.jpg"/>
+                    <img class="flex-1 w-auto" src="https://i.pinimg.com/originals/3a/80/36/3a80363ad681b4f6a79276c85f81ccb0.jpg" alt=""/>
                   </div>
                 </div>
           </div>

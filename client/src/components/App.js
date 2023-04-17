@@ -31,32 +31,40 @@ function App() {
   if (!user) return <Login onLogin={setUser} />;
 
   return (
-    <div className="container">
+    <>
+      <Header user={user} setUser={setUser} />
       {location.pathname.startsWith("/projects/") ||
       location.pathname.startsWith("/profile") ? (
         <SideBar />
       ) : null}
-
-      <Header user={user} setUser={setUser} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/explore"
-          element={
-            <ProjectCollection
-              refreshExplore={refreshExplore}
-              projects={projects}
-            />
-          }
-        />
-        <Route
-          path="/profile"
-          element={<Profile refreshExplore={refreshExplore} />}
-        />
-        <Route path="/profile/:userId" element={<ProfilePage />} />
-        <Route path="/projects/:projectId" element={<ProjectPage />} />
-      </Routes>
-    </div>
+      <div
+        className={
+          location.pathname.startsWith("/projects/") ||
+          location.pathname.startsWith("/profile")
+            ? "container"
+            : ""
+        }
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/explore"
+            element={
+              <ProjectCollection
+                refreshExplore={refreshExplore}
+                projects={projects}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={<Profile refreshExplore={refreshExplore} />}
+          />
+          <Route path="/profile/:userId" element={<ProfilePage />} />
+          <Route path="/projects/:projectId" element={<ProjectPage />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 

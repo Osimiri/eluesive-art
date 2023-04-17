@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Card, Image, Button, Icon, Label } from "semantic-ui-react";
+import { Card, Image, Button} from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "./UserProvider";
 

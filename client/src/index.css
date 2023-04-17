@@ -70,5 +70,6 @@
 
 .container {
   position: relative;
-  margin-left: 300px; /* adjust the width based on your sidebar */
+  margin-left: 300px;
+  margin-top: 80px; /* adjust the width based on your sidebar */
 }

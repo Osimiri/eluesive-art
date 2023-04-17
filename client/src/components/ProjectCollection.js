@@ -9,11 +9,12 @@ import {Card} from "semantic-ui-react";
 
 function ProjectCollection({projects, refreshExplore}){
   const projectCards = projects.map((project)=> {
-      // console.log(project.creator)
-      console.log(project)
+      console.log(project.creator)
+      // console.log(project)
 
       return (
       <ProjectCard
+        key = {project.id}
         projectId = {project.id}
         title={project.title}
         likes = {project.likes}

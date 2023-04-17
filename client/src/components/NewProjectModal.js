@@ -22,7 +22,7 @@ function NewProjectModal({ refreshExplore, setProjects, refreshProject }) {
       image_url: imageUrl,
       description: description,
       creator: user.username,
-      user_id: user.id,
+      user_id: user.id
     };
     console.log(newProject);
     fetch("/projects", {

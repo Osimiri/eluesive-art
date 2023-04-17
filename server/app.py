@@ -337,7 +337,6 @@ class Projects(Resource):
             jsonify(projects_dict),
             200
         )
-
         
         return response
     
@@ -349,18 +348,20 @@ class Projects(Resource):
             title = data.get('title')
             image_url = data.get('image_url')
             description = data.get('description')
-            username = data.get('username')
             user_id = data.get('user_id')
 
-            # Find user by username
-            user = User.query.filter_by(username=username).first()
+            # Get user by user_id
+            user = User.query.get(user_id)
+            if not user:
+                raise Exception(f"No user found with id {user_id}")
 
             project = Project(
                 title=title,
                 image_url=image_url,
                 description=description,
-                creator=username,
-                user_id= user_id
+                user=user,
+                user_id=user_id,
+                creator=user.username
             )
 
             db.session.add(project)
@@ -375,6 +376,7 @@ class Projects(Resource):
 
         except Exception as e:
             return {'error': str(e)}, 500
+    
 
 api.add_resource(Projects, '/projects')
 

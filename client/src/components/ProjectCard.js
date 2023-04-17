@@ -5,13 +5,10 @@ import { UserContext } from "./UserProvider";
 
 function ProjectCard({
   title,
-  users,
   description,
   image,
   project,
-  likes,
   creator,
-  profileId,
   projectId,
   refreshProject,
   refreshExplore

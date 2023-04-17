@@ -59,17 +59,26 @@ function ProjectCard({
         </div>
         <div className="card-info">
           <Card.Content style={{ height: "auto", width: "auto" }}>
-            <Card.Header>Title: {title}</Card.Header>
+            <Card.Header class="text-2xl font-medium ">
+              Title: {title}
+            </Card.Header>
             <Card.Meta>
               <span className="date">Price: Priceless</span>
             </Card.Meta>
-                  <NavLink to={`/projects/${projectId}`}>View Project</NavLink>
+            <NavLink to={`/projects/${projectId}`}>View Project</NavLink>
+            {/* <Button
+              className="button"
+              color="brown"
+              as={NavLink}
+              to={`/projects/${projectId}`}
+            >
+              View Project
+            </Button> */}
             <div className="card-description-hover">
               <Card.Description>
-                <p>Creator: {creator}</p>
-                {<p>Description: {description}</p>}
-                <Card.Content extra>
-                </Card.Content>
+                <p class="text-2xl font-extrabold">Creator: {creator}</p>
+                {<p class="text-lg font-light">Description: {description}</p>}
+                <Card.Content extra></Card.Content>
               </Card.Description>
             </div>
           </Card.Content>

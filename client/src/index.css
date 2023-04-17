@@ -87,7 +87,7 @@
 
 .card-description-hover {
   position: absolute;
-  top: 10%; /* adjust the top value to change the vertical position of the hovered text */
+  top: 5%; /* adjust the top value to change the vertical position of the hovered text */
   left: 0;
   width: 100%;
   height: 50%; 
@@ -104,5 +104,5 @@
 }
 
 .card-info:hover .card-description-hover {
-  opacity: 3;
+  opacity: 1;
 }

@@ -13,6 +13,7 @@ function NewUpdateModal({project}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  console.log(project.id)
   const handleSubmit = () => {
     const newUpdate = {
       notes: notes,

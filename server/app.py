@@ -151,7 +151,40 @@ class Updates(Resource):
         )
 
         return response 
-        
+
+    def post(self):
+        try:
+            data = request.get_json()
+
+            # Extract required fields from data
+            notes = data.get('notes')
+            media_type = data.get('media_type')
+            image_url = data.get('image_url')
+            title = data.get('title')
+            likes = data.get('likes')
+            project_id = data.get('project_id')
+
+            # Get project by project_id
+            project = Project.query.get(project_id)
+            if not project:
+                raise Exception(f"No project found with id {project_id}")
+
+            update = Update(notes=notes, media_type=media_type, image_url=image_url, title=title, likes=likes, project_id=project_id)
+
+
+            db.session.add(update)
+            db.session.commit()
+
+            response = make_response(
+                jsonify(update.to_dict()),
+                201
+            )
+
+            return response
+
+        except Exception as e:
+            return {'error': str(e)}, 500
+
 api.add_resource(Updates, '/updates')
 
 class UpdatesByProjectId(Resource):
@@ -288,11 +321,10 @@ class Comments(Resource):
     def patch(self, comment_id):
         comment = Comment.query.get(comment_id)
 
-        # Check if the comment exists
         if not comment:
             return {'message': 'Comment not found'}, 404
 
-        # Check if the user is authorized to update the comment
+        # Check if the user is authorized
         if session.get('user_id') != comment.user_id:
             return {'message': 'You are not authorized to update this comment'}, 403
 

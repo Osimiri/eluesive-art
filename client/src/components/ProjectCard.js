@@ -70,6 +70,7 @@ function ProjectCard({
             <Card.Description>
               <p class="text-2xl font-extrabold">Creator: {creator}</p>
               {<p class="text-lg font-light">Description: {description}</p>}
+              <NavLink to={`/projects/${projectId}`}>View Project</NavLink>
               <Card.Content extra></Card.Content>
             </Card.Description>
           </div>

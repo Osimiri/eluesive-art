@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UpdateCard from "./UpdateCard";
+import NewUpdateModal from "./NewUpdateModal";
 
 function ProjectPage() {
   const { projectId } = useParams(); // get id parameter from URL
   //   project_updates/1
   const [updates, setUpdates] = useState(null);
   const [project, setProject] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch(`/projects/${projectId}`)
@@ -25,6 +27,7 @@ function ProjectPage() {
   }
 
   return (
+    
     <div>
       <div class="parent-div flex flex-row">
         <div class="project-details w-2/4 flex flex-col items-center justify-center">
@@ -55,6 +58,11 @@ function ProjectPage() {
             title={update.title}
           />
         ))}
+        <NewUpdateModal
+        project ={project}
+          open={showModal}
+          setOpen={setShowModal}
+        />
     </div>
   );
 }

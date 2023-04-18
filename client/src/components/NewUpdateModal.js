@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button, Modal, Form } from "semantic-ui-react";
 import { UserContext } from "./UserProvider";
 
-function NewUpdateModal({project}) {
+function NewUpdateModal({project, setUpdates, updates}) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -14,6 +14,7 @@ function NewUpdateModal({project}) {
   const handleClose = () => setOpen(false);
 
   console.log(project.id)
+  
   const handleSubmit = () => {
     const newUpdate = {
       notes: notes,
@@ -23,7 +24,6 @@ function NewUpdateModal({project}) {
       likes: 0,
       project_id: project.id
     };
-    console.log(newUpdate);
     
     fetch("/updates", {
       method: "POST",
@@ -34,7 +34,8 @@ function NewUpdateModal({project}) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);        
+        console.log(data);
+        setUpdates([...updates, data]); // update the list of updates
         handleClose();
       })
       .catch((err) => console.error(err));
@@ -48,7 +49,7 @@ function NewUpdateModal({project}) {
       trigger={
         <Button
           style={{
-            position: "fixed",
+            // position: "fixed",
             top: "90px",
             right: "1450px",
             margin: "0",

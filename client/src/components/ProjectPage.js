@@ -68,6 +68,16 @@ function ProjectPage() {
         </div>
       </div>
 
+      {user.id === project.user_id && (
+        <NewUpdateModal
+          project={project}
+          open={showModal}
+          setOpen={setShowModal}
+          setUpdates={setUpdates}
+          updates={updates}
+        />
+      )}
+
       <h2>Updates:</h2>
       {updates &&
         updates.map((update) => (
@@ -81,14 +91,6 @@ function ProjectPage() {
             title={update.title}
           />
         ))}
-
-      {user.id === project.user_id && (
-        <NewUpdateModal
-          project={project}
-          open={showModal}
-          setOpen={setShowModal}
-        />
-      )}
 
       <SideBar
         user={user}

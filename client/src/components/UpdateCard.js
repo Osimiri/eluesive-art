@@ -3,7 +3,7 @@ import CommentsModal from "./CommentsModal";
 import { Card, Image, Button, Icon } from "semantic-ui-react";
 import { UserContext } from "./UserProvider";
 
-function UpdateCard({ title, update, likes, date, image, notes, project }) {
+function UpdateCard({ title, update, likes, date, image, notes, project,handleUpdateDeleted }) {
   const [showCommentsModal, setShowCommentsModal] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [user, setUser] = useContext(UserContext);
@@ -20,15 +20,16 @@ function UpdateCard({ title, update, likes, date, image, notes, project }) {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/updates`, {
+      const response = await fetch(`/updates/${update.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
       });
       if (response.ok) {
-        // Update the state to remove the deleted update
-        // For example, we could pass down a function to the component that removes the update from the parent component's state
+        console.log('its deleted LOL')
+        handleUpdateDeleted(update.id)
+        
       } else {
         throw new Error("Failed to delete update");
       }
@@ -46,7 +47,7 @@ function UpdateCard({ title, update, likes, date, image, notes, project }) {
           <Image className="card-image" src={image} alt={title} />
         </div>
         <Card.Header>{update.title}</Card.Header>
-        <Card.Meta class="font-bold">{formattedDate}</Card.Meta>
+        <Card.Meta className="font-bold">{formattedDate}</Card.Meta>
         <Card.Description>
           {showNotes && (
             <p>

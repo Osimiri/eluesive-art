@@ -118,7 +118,7 @@
 }
 
 .my-masonry-grid_column {
-  padding-left: 30px; /* gutter size */
+  padding-left: 30px; 
   background-clip: padding-box;
 }
 
@@ -133,7 +133,7 @@
 }
 
 .updates-masonry-grid_column {
-  padding-left: 30px; /* gutter size */
+  padding-left: 30px; 
   background-clip: padding-box;
   margin-left: 60px;
 }
@@ -142,8 +142,8 @@
   display: flex;
   margin-bottom: 100px;
   margin-top: 80px;
-  margin-left: 130px; /* gutter size offset */
-  margin-right: 320px; /* gutter size offset */
+  margin-left: 130px;
+  margin-right: 320px; 
   width: auto;
   align-items: flex-start; /* align items at the bottom of each row */
 }

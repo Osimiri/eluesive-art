@@ -156,7 +156,6 @@ class Updates(Resource):
         try:
             data = request.get_json()
 
-            # Extract required fields from data
             notes = data.get('notes')
             media_type = data.get('media_type')
             image_url = data.get('image_url')
@@ -164,7 +163,6 @@ class Updates(Resource):
             likes = data.get('likes')
             project_id = data.get('project_id')
 
-            # Get project by project_id
             project = Project.query.get(project_id)
             if not project:
                 raise Exception(f"No project found with id {project_id}")
@@ -184,30 +182,43 @@ class Updates(Resource):
 
         except Exception as e:
             return {'error': str(e)}, 500
+
+api.add_resource(Updates, '/updates')
+
+class UpdatesById(Resource):
+    def get(self,id):
+        update = Update.query.filter(Update.id == id).first()
+        update_dictionary= update.to_dict()
+
+        if not update:
+            return make_response(
+                {"error": "Update not found"},
+                404
+            )
+        else:
+            return make_response(
+                jsonify(update_dictionary),
+                200
+            )
     
-    def delete(self):
-        try:
-            data = request.get_json()
-            update_id = data.get('update_id')
+    def delete(self, id):
+        update = Update.query.filter(Update.id == id).first()
 
-            update = Update.query.get(update_id)
-            if not update:
-                raise Exception(f"No update found with id {update_id}")
-
+        if not update:
+            return make_response(
+                {"error": "Update not found"},
+                404
+            )
+        else:
             db.session.delete(update)
             db.session.commit()
 
-            response = make_response(
-                jsonify({"message": "Update deleted successfully"}), 
+            return make_response(
+                {"message": "Update deleted successfully"},
                 200
             )
 
-            return response
-
-        except Exception as e:
-            return {'error': str(e)}, 500
-
-api.add_resource(Updates, '/updates')
+api.add_resource(UpdatesById, '/updates/<int:id>')
 
 class UpdatesByProjectId(Resource):
     def get(self,id):
@@ -350,7 +361,7 @@ class Comments(Resource):
         if session.get('user_id') != comment.user_id:
             return {'message': 'You are not authorized to update this comment'}, 403
 
-        # Update the comment
+
         content = request.json.get('content')
         if not content:
             return {'message': 'Missing content field'}, 400
@@ -398,13 +409,13 @@ class Projects(Resource):
         try:
             data = request.get_json()
 
-            # Extract required fields from data
+           
             title = data.get('title')
             image_url = data.get('image_url')
             description = data.get('description')
             user_id = data.get('user_id')
 
-            # Get user by user_id
+            
             user = User.query.get(user_id)
             if not user:
                 raise Exception(f"No user found with id {user_id}")

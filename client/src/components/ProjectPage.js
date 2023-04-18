@@ -56,17 +56,22 @@ function ProjectPage() {
   const profile_pic = poster.image_url;
   const username = poster.username;
 
+  const handleUpdateDeleted = (id) => {
+    const updatedUpdates = updates.filter((update) => update.id !== id);
+    setUpdates(updatedUpdates);
+  };
+
   return (
     <div>
-      <div class="parent-div flex flex-row">
-        <div class="project-details w-2/4 flex flex-col items-center justify-center">
-          <h1 class="text-5xl font-bold">{project.title}</h1>
-          <p class="text-2xl">By: {project.creator}</p>
-          <p class="text-2xl font-light">Description: {project.description}</p>
+      <div className="parent-div flex flex-row">
+        <div className="project-details w-2/4 flex flex-col items-center justify-center">
+          <h1 className="text-5xl font-bold">{project.title}</h1>
+          <p className="text-2xl">By: {project.creator}</p>
+          <p className="text-2xl font-light">Description: {project.description}</p>
         </div>
 
-        <div class="project-image w-2/4">
-          <img class="max-h-full" src={project.image_url} alt={project.title} />
+        <div className="project-image w-2/4">
+          <img className="max-h-full" src={project.image_url} alt={project.title} />
         </div>
       </div>
       {user.id === project.user_id && (
@@ -78,7 +83,7 @@ function ProjectPage() {
           updates={updates}
         />
       )}
-      <h2 class=" pt-15 text-2xl font-light underline underline-offset-8 font-black ">Updates:</h2>
+      <h2 className=" pt-15 text-2xl font-light underline underline-offset-8 font-black ">Updates:</h2>
       
       <Masonry
         breakpointCols={3}
@@ -96,6 +101,7 @@ function ProjectPage() {
                 notes={update.notes}
                 title={update.title}
                 project={project}
+                handleUpdateDeleted={handleUpdateDeleted}
               />
             </div>
           ))}

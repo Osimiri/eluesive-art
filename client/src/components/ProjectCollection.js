@@ -27,7 +27,7 @@ function ProjectCollection({ projects, refreshExplore }) {
 
   return (
 
-    <div class="bg-[#f5f1ed]">
+    <div className="bg-[#f5f1ed]">
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid bg-[#f5f1ed]"

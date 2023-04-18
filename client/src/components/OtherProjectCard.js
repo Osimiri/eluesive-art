@@ -3,7 +3,7 @@ import { Card, Image, Button } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "./UserProvider";
 
-function ProjectCard({
+function OtherProjectCard({
   title,
   description,
   image,
@@ -76,19 +76,8 @@ function ProjectCard({
         </Card.Content>
       </div>
     </>
-    {user && user.id === project.user_id && (
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          className="button"
-          color="brown"
-          onClick={() => handleDelete()}
-        >
-          Delete
-        </Button>
-      </div>
-    )}
   </Card>
 );
 }
 
-export default ProjectCard;
+export default OtherProjectCard;

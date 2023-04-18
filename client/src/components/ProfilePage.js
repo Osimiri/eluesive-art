@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "./SideBar";
 import { useParams } from "react-router-dom";
-import ProjectCard from "./ProjectCard";
+import OtherProjectCard from "./OtherProjectCard";
 
-function UserProfilePage() {
+function ProfilePage() {
   const [user, setUser] = useState([]);
   const [projects, setProjects] = useState([]);
   const { userId } = useParams(); // get id parameter from URL
@@ -19,7 +19,7 @@ function UserProfilePage() {
       .then((data) => setUser(data));
   }, [userId]);
 
-  console.log(user);
+  console.log(userId);
 
   useEffect(() => {
     fetch(`/projects_user/${user.id}`)
@@ -32,7 +32,7 @@ function UserProfilePage() {
       {user && (
         <>
           {projects.map((project) => (
-            <ProjectCard
+            <OtherProjectCard
               key={project.id}
               projectId={project.id}
               title={project.title}
@@ -56,4 +56,4 @@ function UserProfilePage() {
   );
 }
 
-export default UserProfilePage;
+export default ProfilePage;

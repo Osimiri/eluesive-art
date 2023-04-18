@@ -26,10 +26,21 @@ function ProjectPage() {
 
   return (
     <div>
-      <h1>{project.title}</h1>
-      <p>Creator: {project.creator}</p>
-      <img src={project.image_url} alt={project.title} />
-      <p>Description: {project.description}</p>
+      <div class="parent-div flex flex-row">
+        <div class="project-details w-2/4 flex flex-col items-center justify-center">
+          <h1 class= "text-5xl font-bold">{project.title}</h1>
+          <p class="text-2xl">By: {project.creator}</p>
+          <p class="text-2xl font-light">Description: {project.description}</p>
+        </div>
+
+        <div class="project-image w-2/4">
+          <img
+            class="max-h-full"
+            src={project.image_url}
+            alt={project.title}
+          />
+        </div>
+      </div>
 
       <h2>Updates:</h2>
       {updates &&

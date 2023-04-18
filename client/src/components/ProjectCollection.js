@@ -1,17 +1,11 @@
 import React from "react";
-// import {Link} from 'react-router-dom';
 import ProjectCard from "./ProjectCard";
-import { Card } from "semantic-ui-react";
-
+import Masonry, { default as MasonryItem } from 'react-masonry-css';
 
 function ProjectCollection({ projects, refreshExplore }) {
-  const projectCards = projects.map((project) => {
-    console.log(project.creator);
-    // console.log(project)
-
-    return (
+  const projectCards = projects.map((project) => (
+    <MasonryItem key={project.id}>
       <ProjectCard
-        key={project.id}
         projectId={project.id}
         title={project.title}
         likes={project.likes}
@@ -21,12 +15,26 @@ function ProjectCollection({ projects, refreshExplore }) {
         refreshExplore={refreshExplore}
         project={project}
       />
-    );
-  });
+    </MasonryItem>
+  ));
+
+  const breakpointColumnsObj = {
+    default: 4, // change this to 4
+    1100: 3,
+    700: 2,
+    500: 1,
+  };
 
   return (
-    <div className="card-group">
-      <Card.Group itemsPerRow={4}>{projectCards}</Card.Group>
+
+    <div class="bg-[#f5f1ed]">
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid bg-[#f5f1ed]"
+        columnClassName="my-masonry-grid_column"
+      >
+        {projectCards}
+      </Masonry>
     </div>
   );
 }

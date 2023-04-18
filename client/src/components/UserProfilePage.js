@@ -28,8 +28,9 @@ function UserProfilePage({ refreshExplore }) {
 }
   return (
     <div className="user-profile-page">
-      {user && (
-        <>
+    {user && (
+      <>
+        <div className="grid grid-cols-2 gap-4">
           {projects.map((project) => (
             <ProjectCard
               key={project.id}
@@ -46,26 +47,27 @@ function UserProfilePage({ refreshExplore }) {
               refreshProject = {refreshProject}
             />
           ))}
+        </div>
 
-          <SideBar
-            user={user}
-            bio={bio}
-            username={username}
-            profile_pic={profile_pic}
-            full_name={full_name}
-          />
+        <SideBar
+          user={user}
+          bio={bio}
+          username={username}
+          profile_pic={profile_pic}
+          full_name={full_name}
+        />
 
-          <NewProjectModal
-            open={showModal}
-            setOpen={setShowModal}
-            refreshExplore={refreshExplore}
-            refreshProject = {refreshProject}
-            setProjects = {setProjects}
-          />
-        </>
-      )}
-    </div>
-  );
+        <NewProjectModal
+          open={showModal}
+          setOpen={setShowModal}
+          refreshExplore={refreshExplore}
+          refreshProject = {refreshProject}
+          setProjects = {setProjects}
+        />
+      </>
+    )}
+  </div>
+);
 }
 
 export default UserProfilePage;

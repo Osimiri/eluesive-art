@@ -4,7 +4,7 @@
 
 .nav-container {
   background-color: #4a5240;
-  height: 70px;
+  height: 80px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -62,7 +62,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  margin-top: 70px;
+  margin-top: 80px;
   width: 300px;
   height: 100%;
   background-color: #f5f5f5;
@@ -87,22 +87,44 @@
 
 .card-description-hover {
   position: absolute;
-  top: 5%; /* adjust the top value to change the vertical position of the hovered text */
+  top: 5%;
   left: 0;
   width: 100%;
-  height: 50%; 
+  height: 70%;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 10px;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  display: flex; /* use flexbox to center the text */
-  justify-content: center; /* horizontal center  */
-  align-items: center; /* vertical center  */
-  text-align: center; /* center within div  */
-  box-sizing: border-box; /* include padding in height calculation */
-  margin: 15% 0; /* create 15% top and bottom margins, and 0 left and right margins */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  margin: -2% 0 0; /* add margin-top of 20% */
+  overflow: auto;
 }
 
 .card-info:hover .card-description-hover {
   opacity: 1;
 }
+
+.my-masonry-grid {
+  display: flex;
+  margin-top: 80px;
+  margin-left: 100px; /* gutter size offset */
+  margin-right: 320px; /* gutter size offset */
+  width: auto;
+  align-items: flex-start; /* align items at the bottom of each row */
+}
+
+.my-masonry-grid_column {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div {
+  /* change this to your desired width */
+  width: 200%;
+}
+

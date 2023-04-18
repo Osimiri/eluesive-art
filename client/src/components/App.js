@@ -45,7 +45,7 @@ function App() {
             : ""
         }
       >
-        <Routes>
+        <Routes >
           <Route path="/" element={<Home />} />
           <Route
             path="/explore"

@@ -53,7 +53,7 @@ function NewProjectModal({ refreshExplore, setProjects, refreshProject }) {
         <Button
           style={{
             position: "fixed",
-            top: "70px",
+            top: "90px",
             right: "30px",
             margin: "0",
           }}

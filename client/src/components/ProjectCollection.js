@@ -4,7 +4,7 @@ import Masonry, { default as MasonryItem } from 'react-masonry-css';
 
 function ProjectCollection({ projects, refreshExplore }) {
   const projectCards = projects.map((project) => (
-    <MasonryItem key={project.id}>
+    <MasonryItem key={project.id} className="my-masonry-grid">
       <ProjectCard
         projectId={project.id}
         title={project.title}

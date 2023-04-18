@@ -6,6 +6,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  console.log(user)
   useEffect(() => {
     // auto-login
     fetch("/check_session").then((r) => {
@@ -15,7 +16,7 @@ export const UserProvider = ({ children }) => {
     });
   }, []);
 
-  console.log("From the User Provider:")
+  // console.log("From the User Provider:")
   console.log(user)
   
   return (

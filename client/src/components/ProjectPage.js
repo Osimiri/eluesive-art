@@ -50,6 +50,7 @@ function ProjectPage() {
     return <div>Loading poster...</div>;
   }
 
+    console.log(user.id)
   // console.log(project);
   const bio = poster.biography;
   const full_name = poster.full_name;
@@ -83,7 +84,7 @@ function ProjectPage() {
           updates={updates}
         />
       )}
-      <h2 className=" pt-15 text-2xl font-light underline underline-offset-8 font-black ">Updates:</h2>
+      <h2 className=" pt-15 text-2xl underline underline-offset-8 font-black ">Updates:</h2>
       
       <Masonry
         breakpointCols={3}
@@ -108,7 +109,7 @@ function ProjectPage() {
       </Masonry>
 
       <SideBar
-        user={user}
+        userId={user.id}
         bio={bio}
         username={username}
         profile_pic={profile_pic}

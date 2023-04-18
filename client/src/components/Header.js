@@ -17,26 +17,26 @@ function Header({ user, setUser }) {
           <div className="Route Buttons">
             <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
               <li style={{ display: 'inline-block', margin: '0 10px' }}>
-                <NavLink exact to="/" className="nav-links">
+                <NavLink exact="true" to="/" className="nav-links">
                   <span className = "nav-text">Home</span>
                 </NavLink>
               </li>
 
 
               <li style={{ display: 'inline-block', margin: '0 10px' }}>
-                <NavLink exact to="/explore" className="nav-links">
+                <NavLink exact="true" to="/explore" className="nav-links">
                   <span className = "nav-text">Explore</span>
                 </NavLink>
               </li>
               
               <li style={{ display: 'inline-block', margin: '0 10px' }}>
-                <NavLink exact to="/profile" className="nav-links">
+                <NavLink exact="true" to="/profile" className="nav-links">
                   <span className = "nav-text">Profile</span>
                 </NavLink>
               </li>
 
               <li style={{ display: 'inline-block', margin: '0 10px', float: 'right' }}>
-                <NavLink exact to="/" onClick={handleLogoutClick} className="nav-links">
+                <NavLink exact="true" to="/" onClick={handleLogoutClick} className="nav-links">
                   <span className = "nav-text">LogOut</span>
                 </NavLink>
               </li>

@@ -2,9 +2,8 @@ import React from "react";
 import {Image, Header, Container} from "semantic-ui-react";
 
 
-function Sidebar({bio,username,profile_pic, full_name, user, userId}) {
+function ProjectSidebar({bio,username,profile_pic, full_name, user, userId}) {
   
-  console.log(userId)
   const profileRoute = `/profile/${userId}`
 
   return (
@@ -28,4 +27,4 @@ function Sidebar({bio,username,profile_pic, full_name, user, userId}) {
   );
 }
 
-export default Sidebar;
+export default ProjectSidebar;

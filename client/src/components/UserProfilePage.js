@@ -27,6 +27,7 @@ function UserProfilePage({ refreshExplore }) {
       .then((res) => res.json())
       .then((data) => setProjects(data));
 }
+
   return (
 
     
@@ -71,6 +72,7 @@ function UserProfilePage({ refreshExplore }) {
           refreshExplore={refreshExplore}
           refreshProject = {refreshProject}
           setProjects = {setProjects}
+          user={user}
         />
       </>
     )}

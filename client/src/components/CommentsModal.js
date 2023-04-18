@@ -4,9 +4,9 @@ import { UserContext } from "./UserProvider";
 
 
 function CommentsModal({ open, onClose, update }) {
+  const [user, setUser] = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [user, setUser] = useContext(UserContext);
   const [editComment, setEditComment] = useState(null);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function CommentsModal({ open, onClose, update }) {
       console.error(error);
     }
   };
-
+  
   const handleEdit = (comment) => {
     setEditComment(comment);
   };

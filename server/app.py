@@ -184,6 +184,28 @@ class Updates(Resource):
 
         except Exception as e:
             return {'error': str(e)}, 500
+    
+    def delete(self):
+        try:
+            data = request.get_json()
+            update_id = data.get('update_id')
+
+            update = Update.query.get(update_id)
+            if not update:
+                raise Exception(f"No update found with id {update_id}")
+
+            db.session.delete(update)
+            db.session.commit()
+
+            response = make_response(
+                jsonify({"message": "Update deleted successfully"}), 
+                200
+            )
+
+            return response
+
+        except Exception as e:
+            return {'error': str(e)}, 500
 
 api.add_resource(Updates, '/updates')
 

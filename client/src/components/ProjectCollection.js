@@ -19,7 +19,7 @@ function ProjectCollection({ projects, refreshExplore }) {
   ));
 
   const breakpointColumnsObj = {
-    default: 4, // change this to 4
+    default: 4, 
     1100: 3,
     700: 2,
     500: 1,

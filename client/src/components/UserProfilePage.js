@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import ProjectCard from "./ProjectCard";
 import NewProjectModal from "./NewProjectModal";
 import { UserContext } from "./UserProvider";
+import Masonry from 'react-masonry-css';
 
 function UserProfilePage({ refreshExplore }) {
   const [user, setUser] = useContext(UserContext);
@@ -27,10 +28,17 @@ function UserProfilePage({ refreshExplore }) {
       .then((data) => setProjects(data));
 }
   return (
+
+    
+
     <div className="user-profile-page">
     {user && (
       <>
-        <div className="grid grid-cols-2 gap-4">
+        <Masonry
+        breakpointCols={{default: 2, 768: 1}}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+        >
           {projects.map((project) => (
             <ProjectCard
               key={project.id}
@@ -47,7 +55,7 @@ function UserProfilePage({ refreshExplore }) {
               refreshProject = {refreshProject}
             />
           ))}
-        </div>
+        </Masonry>
 
         <SideBar
           user={user}

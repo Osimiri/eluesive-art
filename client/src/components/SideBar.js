@@ -5,7 +5,7 @@ import {Image, Header, Container} from "semantic-ui-react";
 function Sidebar({bio,username,profile_pic, full_name, user}) {
   
   // console.log(user)
-  console.log(profile_pic)
+  // console.log(profile_pic)
 
   return (
     <div className="sidebar">

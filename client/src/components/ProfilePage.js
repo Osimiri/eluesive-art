@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import SideBar from "./SideBar";
 import { useParams } from "react-router-dom";
 import OtherProjectCard from "./OtherProjectCard";
+import Masonry from 'react-masonry-css';
+
 
 function ProfilePage() {
   const [user, setUser] = useState([]);
@@ -31,6 +33,11 @@ function ProfilePage() {
     <div className="user-profile-page">
       {user && (
         <>
+          <Masonry
+        breakpointCols={{default: 2, 768: 1}}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+        >
           {projects.map((project) => (
             <OtherProjectCard
               key={project.id}
@@ -42,14 +49,15 @@ function ProfilePage() {
               creator={project.creator}
             />
           ))}
+        </Masonry>
 
-          <SideBar
-            user={user}
-            bio={bio}
-            username={username}
-            profile_pic={profile_pic}
-            full_name={full_name}
-          />
+        <SideBar
+          user={user}
+          bio={bio}
+          username={username}
+          profile_pic={profile_pic}
+          full_name={full_name}
+        />
         </>
       )}
     </div>

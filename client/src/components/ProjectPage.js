@@ -4,11 +4,12 @@ import { useParams } from "react-router-dom";
 import UpdateCard from "./UpdateCard";
 import NewUpdateModal from "./NewUpdateModal";
 import { UserContext } from "./UserProvider";
+import Masonry from "react-masonry-css";
 
 function ProjectPage() {
   const { projectId } = useParams(); // get id parameter from URL
   //   project_updates/1
-  const [poster, setPoster] = useState(null)
+  const [poster, setPoster] = useState(null);
   const [updates, setUpdates] = useState(null);
   const [project, setProject] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -49,6 +50,7 @@ function ProjectPage() {
     return <div>Loading poster...</div>;
   }
 
+  // console.log(project);
   const bio = poster.biography;
   const full_name = poster.full_name;
   const profile_pic = poster.image_url;
@@ -67,7 +69,6 @@ function ProjectPage() {
           <img class="max-h-full" src={project.image_url} alt={project.title} />
         </div>
       </div>
-
       {user.id === project.user_id && (
         <NewUpdateModal
           project={project}
@@ -77,20 +78,28 @@ function ProjectPage() {
           updates={updates}
         />
       )}
-
-      <h2>Updates:</h2>
-      {updates &&
-        updates.map((update) => (
-          <UpdateCard
-            key={update.id}
-            likes={update.likes}
-            date={update.created_at}
-            image={update.image_url}
-            update={update}
-            notes={update.notes}
-            title={update.title}
-          />
-        ))}
+      <h2 class=" pt-15 text-2xl font-light underline underline-offset-8 font-black ">Updates:</h2>
+      
+      <Masonry
+        breakpointCols={3}
+        className="updates-grid"
+        columnClassName="updates-masonry-grid_column"
+      >
+        {updates &&
+          updates.map((update) => (
+            <div key={update.id} className="my-masonry-grid_column">
+              <UpdateCard
+                likes={update.likes}
+                date={update.created_at}
+                image={update.image_url}
+                update={update}
+                notes={update.notes}
+                title={update.title}
+                project={project}
+              />
+            </div>
+          ))}
+      </Masonry>
 
       <SideBar
         user={user}
@@ -99,7 +108,6 @@ function ProjectPage() {
         profile_pic={profile_pic}
         full_name={full_name}
       />
-
     </div>
   );
 }

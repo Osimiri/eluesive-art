@@ -1,12 +1,23 @@
 import React, { useState, useContext } from "react";
 import CommentsModal from "./CommentsModal";
-import { Card, Image, Button, Icon } from "semantic-ui-react";
+import { Card, Image, Button, Icon, Modal } from "semantic-ui-react";
 import { UserContext } from "./UserProvider";
 
-function UpdateCard({ title, update, likes, date, image, notes, project,handleUpdateDeleted }) {
+function UpdateCard({
+  title,
+  update,
+  likes,
+  date,
+  image,
+  notes,
+  project,
+  handleUpdateDeleted,
+}) {
   const [showCommentsModal, setShowCommentsModal] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [user, setUser] = useContext(UserContext);
+  const [showImageModal, setShowImageModal] = useState(false);
+
 
   const handleCommentsClick = () => {
     setShowCommentsModal(true);
@@ -15,6 +26,8 @@ function UpdateCard({ title, update, likes, date, image, notes, project,handleUp
   const handleImageClick = () => {
     setShowNotes(!showNotes);
   };
+
+  
 
   const formattedDate = new Date(date).toLocaleString();
 
@@ -27,9 +40,8 @@ function UpdateCard({ title, update, likes, date, image, notes, project,handleUp
         },
       });
       if (response.ok) {
-        console.log('its deleted LOL')
-        handleUpdateDeleted(update.id)
-        
+        console.log("its deleted LOL");
+        handleUpdateDeleted(update.id);
       } else {
         throw new Error("Failed to delete update");
       }
@@ -43,27 +55,34 @@ function UpdateCard({ title, update, likes, date, image, notes, project,handleUp
   return (
     <Card>
       <Card.Content>
-        <div onClick={handleImageClick}>
-          <Image className="card-image" src={image} alt={title} />
+        <div onClick={() => setShowImageModal(true)}>
+          <Image className="card-image cursor-pointer" src={image} alt={title} />
         </div>
-        <Card.Header>{update.title}</Card.Header>
+        <Card.Header >{update.title}</Card.Header>
         <Card.Meta className="font-bold">{formattedDate}</Card.Meta>
-        <Card.Description>
-          {showNotes && (
-            <p>
-              {isOwner && (
-                <Icon
-                  name="delete"
-                  size="large"
-                  color="red"
-                  onClick={handleDelete}
-                  style={{ cursor: "pointer" }}
-                />
-              )}
-              {notes}
-            </p>
-          )}
-        </Card.Description>
+        
+        <div>
+          <p onClick={handleImageClick} className = "underline cursor-pointer"> Show More</p>
+          <Card.Description>
+            {showNotes && (
+              <p>
+                {isOwner && (
+                  <div className="flex">
+                    <i
+                      class="trash alternate icon underline"
+                      name="delete"
+                      size="large"
+                      onClick={handleDelete}
+                      style={{ cursor: "pointer" }}
+                    />
+                    <p> Delete Update </p>
+                  </div>
+                )}
+                {notes}
+              </p>
+            )}
+          </Card.Description>
+        </div>
         <Button onClick={handleCommentsClick}>Comments</Button>
       </Card.Content>
       <CommentsModal
@@ -72,6 +91,12 @@ function UpdateCard({ title, update, likes, date, image, notes, project,handleUp
         comments={update.comments}
         update={update}
       />
+
+      {showImageModal && (
+        <Modal open={showImageModal} onClose={() => setShowImageModal(false)}>
+          <Image src={image} alt={title} />
+        </Modal>
+      )}
     </Card>
   );
 }

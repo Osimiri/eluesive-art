@@ -57,22 +57,15 @@ function Login({ onLogin }) {
         </div>
       </div>
 
-      <div className="h-screen w-screen flex justify-center items-center bg-[#f5f1ed] snap-start">
+      <div className="h-screen w-screen flex justify-center items-center bg-[#f5f1ed] snap-start" style={{ bottom: 0 }}>
         <Wrapper className="bg-[#a99885]" style={{ transform: "scale(1.2)" }}>
-          <h1>Eluesive Art</h1>
+          <h1 className="font-thin text-5xl mb-4">Eluesive Art</h1>
           {showLogin ? (
             <>
               <LoginForm onLogin={onLogin} />
               <Divider />
               <p>
                 Don't have an account? &nbsp;
-                {/* <Button
-                  className="bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded"
-                  color="#f5f1ed"
-                  onClick={() => setShowLogin(false)}
-                >
-                  Sign Up
-                </Button> */}
                 <button className="bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded" onClick={() => setShowLogin(false)}>
                   Sign Up
                 </button>
@@ -84,9 +77,6 @@ function Login({ onLogin }) {
               <Divider />
               <p>
                 Already have an account? &nbsp;
-                {/* <Button color="secondary" onClick={() => setShowLogin(true)}>
-                  Log In
-                </Button> */}
                 <button className="bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded" onClick={() => setShowLogin(true)}>
                   Log In
                 </button>
@@ -98,13 +88,6 @@ function Login({ onLogin }) {
     </div>
   );
 }
-
-// const Logo = styled.h1`
-//   font-family: "Permanent Marker", cursive;
-//   font-size: 3rem;
-//   color: deeppink;
-//   margin: 8px 0 16px;
-// `;
 
 const Wrapper = styled.section`
   max-width: 500px;

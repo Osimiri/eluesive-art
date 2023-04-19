@@ -30,36 +30,38 @@ function ProfilePage() {
   }, [user]);
 
   return (
-    <div className="user-profile-page">
-      {user && (
-        <>
-          <Masonry
-        breakpointCols={{default: 2, 768: 1}}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-        >
-          {projects.map((project) => (
-            <OtherProjectCard
-              key={project.id}
-              projectId={project.id}
-              title={project.title}
-              likes={project.likes}
-              image={project.image_url}
-              description={project.description}
-              creator={project.creator}
-            />
-          ))}
-        </Masonry>
 
-        <SideBar
-          user={user}
-          bio={bio}
-          username={username}
-          profile_pic={profile_pic}
-          full_name={full_name}
-        />
-        </>
-      )}
+    <div className="bg-[#f5f1ed] h-full w-screen">
+      <div className="user-profile-page bg-[#f5f1ed] h-screen w-screen">
+        {user && (
+          <>
+            <Masonry
+          breakpointCols={{default: 2, 768: 1}}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+          >
+            {projects.map((project) => (
+              <OtherProjectCard
+                key={project.id}
+                projectId={project.id}
+                title={project.title}
+                likes={project.likes}
+                image={project.image_url}
+                description={project.description}
+                creator={project.creator}
+              />
+            ))}
+          </Masonry>
+          <SideBar
+            user={user}
+            bio={bio}
+            username={username}
+            profile_pic={profile_pic}
+            full_name={full_name}
+          />
+          </>
+        )}
+      </div>
     </div>
   );
 }

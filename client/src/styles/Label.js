@@ -6,6 +6,7 @@ const Label = styled.label`
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 8px;
+  font-family: "Plus Jakarta Sans", sans-serif;
 `;
 
 export default Label;

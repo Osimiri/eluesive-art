@@ -45,14 +45,56 @@
   border-radius: 5px;
 }
 
-.nav-links li a:hover {
-  background-color: #f5f5f5;
-  color: #0073d3;
+.nav-links:hover {
+  background-color: #4A5240;
+  color: #b284be;
+}
+
+.nav-links.active {
+  background-color: #4A5240;
+  color: #b284be;
 }
 
 .nav-text {
   font-size: 23px;
 }
+
+
+.nav-logout-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4a5240;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: #f5f1ed;
+  /* font-family: 'Plus Jakarta Sans', sans-serif; */
+}
+
+.nav-logout-link li {
+  display: inline-block;
+  margin: 0 20px;
+  /* font-family: 'Plus Jakarta Sans', sans-serif; */
+}
+
+.nav-logout-link li a {
+  font-size: 30px;
+  /* font-family: 'Plus Jakarta Sans', sans-serif; */
+  font-weight: 500;
+  color: #2e2e2e;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.nav-logout-link:hover {
+  background-color: #4A5240;
+  color: #b284be;
+}
+
+
 * {
   font-family: "Plus Jakarta Sans", sans-serif;
   /* font-weight: bolder; */
@@ -65,7 +107,7 @@
   margin-top: 80px;
   width: 300px;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: #a1a485;
   padding: 20px;
   z-index: 999; /* higher than the main content */
 }
@@ -80,10 +122,6 @@
 .card-group{
   margin-top:80px;
 }
-
-/* .card-container{
-
-} */
 
 .card-description-hover {
   position: absolute;
@@ -146,4 +184,22 @@
   margin-right: 320px; 
   width: auto;
   align-items: flex-start; /* align items at the bottom of each row */
+}
+
+#root > div > div.h-screen.w-screen.flex.justify-center.items-center.bg-\[\#f5f1ed\].snap-start > section > form > div:nth-child(1) > label {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: black !important;
+}
+
+#root > div > div.h-screen.w-screen.flex.justify-center.items-center.bg-\[\#f5f1ed\].snap-start > section > form > div:nth-child(2) > label {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: black !important;
+}
+
+body{
+    background-color: #F5F1ED;
+}
+
+.trash.alternate.outline.icon:before {
+  color: red;
 }

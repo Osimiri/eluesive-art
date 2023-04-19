@@ -30,53 +30,51 @@ function UserProfilePage({ refreshExplore }) {
 
   return (
 
-    
-
-    <div className="user-profile-page">
-    {user && (
-      <>
-        <Masonry
-        breakpointCols={{default: 2, 768: 1}}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-        >
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              projectId={project.id}
-              project={project}
-              title={project.title}
-              likes={project.likes}
-              image={project.image_url}
-              description={project.description}
-              creator={project.creator}
-              setProjects ={setProjects}
-              projects = {projects}
-              refreshExplore={refreshExplore}
-              refreshProject = {refreshProject}
-            />
-          ))}
-        </Masonry>
-
-        <SideBar
-          user={user}
-          bio={bio}
-          username={username}
-          profile_pic={profile_pic}
-          full_name={full_name}
-        />
-
-        <NewProjectModal
-          open={showModal}
-          setOpen={setShowModal}
-          refreshExplore={refreshExplore}
-          refreshProject = {refreshProject}
-          setProjects = {setProjects}
-          user={user}
-        />
-      </>
-    )}
-  </div>
+    <div className="bg-[#f5f1ed]">
+      <div className="user-profile-page">
+      {user && (
+        <>
+          <Masonry
+          breakpointCols={{default: 2, 768: 1}}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+          >
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                projectId={project.id}
+                project={project}
+                title={project.title}
+                likes={project.likes}
+                image={project.image_url}
+                description={project.description}
+                creator={project.creator}
+                setProjects ={setProjects}
+                projects = {projects}
+                refreshExplore={refreshExplore}
+                refreshProject = {refreshProject}
+              />
+            ))}
+          </Masonry>
+          <SideBar
+            user={user}
+            bio={bio}
+            username={username}
+            profile_pic={profile_pic}
+            full_name={full_name}
+          />
+          <NewProjectModal
+            open={showModal}
+            setOpen={setShowModal}
+            refreshExplore={refreshExplore}
+            refreshProject = {refreshProject}
+            setProjects = {setProjects}
+            user={user}
+          />
+        </>
+      )}
+        </div>
+    </div>
 );
 }
 

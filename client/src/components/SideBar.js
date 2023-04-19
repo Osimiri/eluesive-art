@@ -9,7 +9,7 @@ function Sidebar({bio,username,profile_pic, full_name, user, userId}) {
 
   return (
     
-    <div className="sidebar">
+    <div className="sidebar bg-[#A1A485]">
 
       <a href= {profileRoute}>
         <Image className = "uhhh" src= {profile_pic} size='big' circular alt="User Pic"/>

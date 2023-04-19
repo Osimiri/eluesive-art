@@ -49,7 +49,7 @@ function ProjectPage() {
   const posterId = project.user_id;
 
   if (!poster) {
-    return <div>Loading poster...</div>;
+    return <div>Loading project...</div>;
   }
 
     console.log(user.id)
@@ -74,7 +74,7 @@ function ProjectPage() {
         </div>
 
         <div className="project-image w-2/4">
-          <img className="max-h-full" src={project.image_url} alt={project.title} />
+          <img className="max-h-full pt-10" src={project.image_url} alt={project.title} />
         </div>
       </div>
       {user.id === project.user_id && (

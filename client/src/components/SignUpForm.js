@@ -24,7 +24,7 @@ function SignUpForm({ onLogin }) {
         password,
         password_confirmation: passwordConfirmation,
         image_url: imageUrl,
-        biography
+        biography,
       }),
     }).then((r) => {
       setIsLoading(false);
@@ -87,7 +87,14 @@ function SignUpForm({ onLogin }) {
         />
       </FormField>
       <FormField>
-        <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
+        <button
+          className="bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded"
+          type="submit"
+        >
+          {isLoading ? "Loading..." : "Sign Up"}
+        </button>
+
+        {/* <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button> */}
       </FormField>
       <FormField>
         {errors?.map((err) => (

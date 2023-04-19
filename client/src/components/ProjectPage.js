@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import SideBar from "./SideBar";
 import { useParams } from "react-router-dom";
-import UpdateCard from "./UpdateCard";
-import NewUpdateModal from "./NewUpdateModal";
 import { UserContext } from "./UserProvider";
 import Masonry from "react-masonry-css";
+import UpdateCard from "./UpdateCard";
+import SideBar from "./SideBar";
+import NewUpdateModal from "./NewUpdateModal";
+// import ProjectSidebar from "./ProjectSidebar";
+
 
 function ProjectPage() {
   const { projectId } = useParams(); // get id parameter from URL
@@ -107,7 +109,9 @@ function ProjectPage() {
             </div>
           ))}
       </Masonry>
-
+      
+      {/* <ProjectSideBar/> */}
+      
       <SideBar
         userId={user.id}
         bio={bio}

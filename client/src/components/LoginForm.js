@@ -29,7 +29,9 @@ function LoginForm({ onLogin }) {
   return (
     <form onSubmit={handleSubmit}>
       <FormField>
-        <Label htmlFor="username">Username</Label>
+        <Label htmlFor="username" className="text-8xl">
+          Username
+        </Label>
         <Input
           type="text"
           id="username"
@@ -49,9 +51,13 @@ function LoginForm({ onLogin }) {
         />
       </FormField>
       <FormField>
-        <Button variant="fill" color="primary" type="submit">
+        <button className="bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded" type="submit">
           {isLoading ? "Loading..." : "Login"}
-        </Button>
+        </button>
+
+        {/* <Button variant="fill" color="primary" type="submit">
+          {isLoading ? "Loading..." : "Login"}
+        </Button> */}
       </FormField>
       <FormField>
         {errors?.map((err) => (

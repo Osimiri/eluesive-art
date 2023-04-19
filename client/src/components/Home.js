@@ -46,7 +46,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="min-h-screen bg-[#f5f1ed] w-screen pt-20 flex flex-col justify-center snap-start">
+          {/* <div className="min-h-screen bg-[#f5f1ed] w-screen pt-20 flex flex-col justify-center snap-start">
             <h1 className="text-6xl font-bold underline mt-20 ml-96">How Does It Work?</h1>
                 <div className = "container mr-96 flex flex-row " >
                   <div className="list-decimal w-3/5">
@@ -61,7 +61,7 @@ function Home() {
                     <img className="flex-1 w-auto" src="https://i.pinimg.com/originals/3a/80/36/3a80363ad681b4f6a79276c85f81ccb0.jpg" alt=""/>
                   </div>
                 </div>
-          </div>
+          </div> */}
           <div className="snap-y snap-mandatory w-screen h-screen overflow-scroll">
             <Embed
               id='d6uN9xYUMxE'

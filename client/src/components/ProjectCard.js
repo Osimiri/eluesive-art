@@ -60,7 +60,7 @@ function ProjectCard({
       <div className="card-info">
         <Card.Content style={{ height: "auto", width: "auto" }}>
           <Card.Header className="text-2xl font-medium ">
-            Title: {title}
+            {title}
           </Card.Header>
           <Card.Meta>
             <span className="date">Price: Priceless</span>
@@ -68,7 +68,7 @@ function ProjectCard({
           <NavLink to={`/projects/${projectId}`}>View Project</NavLink>
           <div className="card-description-hover">
             <Card.Description>
-              <p className="text-2xl font-extrabold">Creator: {creator}</p>
+              <p className="text-2xl font-extrabold">{creator}</p>
               {<p className="text-lg font-light">Description: {description}</p>}
               <NavLink to={`/projects/${projectId}`}>View Project</NavLink>
               <Card.Content extra></Card.Content>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "./SideBar";
+// import ProjectSidebar from "./ProjectSidebar";
 import { useParams } from "react-router-dom";
 import OtherProjectCard from "./OtherProjectCard";
 import Masonry from 'react-masonry-css';

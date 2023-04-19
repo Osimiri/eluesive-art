@@ -12,9 +12,9 @@ function Sidebar({bio,username,profile_pic, full_name, user, userId}) {
     
     <div className= 'bg-[#A1A485]'>
       <div className="sidebar bg-[#A1A485]">
-        <a href= {profileRoute}>
+        {/* <a href= {profileRoute}> */}
           <Image className = "uhhh" src= {profile_pic} size='big' circular alt="User Pic"/>
-        </a>
+        {/* </a> */}
 
         <div className="flex flex-col place-items-center mt-6">
           <Header as='h2' placeholder="Hackerman" className='mx auto '>{username}</Header>

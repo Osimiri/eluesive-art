@@ -18,7 +18,6 @@ function UpdateCard({
   const [user, setUser] = useContext(UserContext);
   const [showImageModal, setShowImageModal] = useState(false);
 
-
   const handleCommentsClick = () => {
     setShowCommentsModal(true);
   };
@@ -26,8 +25,6 @@ function UpdateCard({
   const handleImageClick = () => {
     setShowNotes(!showNotes);
   };
-
-  
 
   const formattedDate = new Date(date).toLocaleString();
 
@@ -56,13 +53,20 @@ function UpdateCard({
     <Card>
       <Card.Content>
         <div onClick={() => setShowImageModal(true)}>
-          <Image className="card-image cursor-pointer" src={image} alt={title} />
+          <Image
+            className="card-image cursor-pointer"
+            src={image}
+            alt={title}
+          />
         </div>
-        <Card.Header >{update.title}</Card.Header>
+        <Card.Header>{update.title}</Card.Header>
         <Card.Meta className="font-bold">{formattedDate}</Card.Meta>
-        
+
         <div>
-          <p onClick={handleImageClick} className = "underline cursor-pointer"> Show More</p>
+          <p onClick={handleImageClick} className="underline cursor-pointer">
+            {" "}
+            Show More
+          </p>
           <Card.Description>
             {showNotes && (
               <p>
@@ -93,10 +97,17 @@ function UpdateCard({
       />
 
       {showImageModal && (
-        <Modal open={showImageModal} onClose={() => setShowImageModal(false)}>
-          <Image src={image} alt={title} />
-        </Modal>
+        <Modal
+          open={showImageModal}
+          onClose={() => setShowImageModal(false)}
+          className="image-modal"
+        >
+          <Modal.Content image class="block width-full m-auto ">
+            <Image className= "width-full m-auto"src={image} alt={title} />
+          </Modal.Content>
+          </Modal>
       )}
+
     </Card>
   );
 }

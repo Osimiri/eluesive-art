@@ -27,7 +27,7 @@ class Signup(Resource):
         password = request_json.get('password')
         image_url = request_json.get('image_url')
         biography = request_json.get('biography')
-
+        
         user = User(
             username=username,
             image_url=image_url,
@@ -91,7 +91,7 @@ class Login(Resource):
                 session['user_id'] = user.id
                 return user.to_dict(), 200
 
-        return {'error': '401 Unauthorized'}, 401
+        return {'error': 'Incorrect Username or Password'}, 401
 
 api.add_resource(Login, '/login', endpoint='login')
 

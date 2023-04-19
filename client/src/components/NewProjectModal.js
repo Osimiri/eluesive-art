@@ -17,6 +17,11 @@ function NewProjectModal({ refreshExplore, setProjects, refreshProject }) {
   const handleClose = () => setOpen(false);
 
   const handleSubmit = () => {
+    if (!title || !imageUrl || !description) {
+      alert("Please fill out all required fields.");
+      return;
+    }
+
     const newProject = {
       title: title,
       image_url: imageUrl,
@@ -71,22 +76,26 @@ function NewProjectModal({ refreshExplore, setProjects, refreshProject }) {
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              required
             />
           </Form.Field>
           <Form.Field>
             <label>Image URL</label>
             <input
-              placeholder="Image URL"
+              placeholder="Image URL must end with .png or .jpg"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
+              required
             />
           </Form.Field>
           <Form.Field>
             <label>Description</label>
             <textarea
-              placeholder="Description"
+              placeholder="Description must be less tha 300 characters long"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              maxLength={300}
+              required
             />
           </Form.Field>
         </Form>

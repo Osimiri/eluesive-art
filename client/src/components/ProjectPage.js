@@ -70,7 +70,8 @@ function ProjectPage() {
         <div className="project-details w-2/4 flex flex-col items-center justify-center">
           <h1 className="text-5xl font-bold">{project.title}</h1>
           <p className="text-2xl">By: {project.creator}</p>
-          <p className="text-2xl font-light">Description: {project.description}</p>
+          <p className= 'mt-10'>Description</p>
+          <p className="text-2xl font-light  pl-20 pr-20">{project.description}</p>
         </div>
 
         <div className="project-image w-2/4">

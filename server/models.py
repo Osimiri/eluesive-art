@@ -74,6 +74,14 @@ class Update(db.Model, SerializerMixin):
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
     comments = db.relationship('Comment', backref='update', lazy=True)
 
+    @validates('image_url')
+    def validate_content(self, key, value):
+        if not value:
+            raise ValueError('Content cannot be empty')
+        if not (value.endswith(".png") or value.endswith(".jpg")):
+            raise ValueError('Image URL must end with .png')
+        return value
+
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
@@ -115,3 +123,17 @@ class Project(db.Model, SerializerMixin):
     
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship("User", backref = "project")
+
+    @validates('image_url')
+    def validate_content(self, key, value):
+        if not value:
+            raise ValueError('Content cannot be empty')
+        if not (value.endswith(".png") or value.endswith(".jpg")):
+            raise ValueError('Image URL must end with .png')
+        return value
+    
+    @validates('description')
+    def validate_description(self, key, value):
+        if len(value) > 300:
+            raise ValueError('Description must be no more than 300 characters')
+        return value

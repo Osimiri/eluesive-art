@@ -71,7 +71,7 @@ function NewUpdateModal({project, setUpdates, updates}) {
           <Form.Field>
             <label>Title</label>
             <input
-              placeholder="required"
+              placeholder="Required."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -80,7 +80,7 @@ function NewUpdateModal({project, setUpdates, updates}) {
           <Form.Field>
             <label>Media Type</label>
             <input
-              placeholder="required"
+              placeholder="Required."
               value={mediaType}
               onChange={(e) => setMediaType(e.target.value)}
               required

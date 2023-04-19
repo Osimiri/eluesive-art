@@ -16,6 +16,12 @@ function NewUpdateModal({project, setUpdates, updates}) {
   // console.log(project.id)
   
   const handleSubmit = () => {
+
+    if (!title || !imageUrl || !mediaType) {
+      alert("Please fill out all required fields.");
+      return;
+    }
+
     const newUpdate = {
       notes: notes,
       media_type: mediaType,
@@ -65,25 +71,28 @@ function NewUpdateModal({project, setUpdates, updates}) {
           <Form.Field>
             <label>Title</label>
             <input
-              placeholder="Title"
+              placeholder="required"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              required
             />
           </Form.Field>
           <Form.Field>
             <label>Media Type</label>
             <input
-              placeholder="Media Type"
+              placeholder="required"
               value={mediaType}
               onChange={(e) => setMediaType(e.target.value)}
+              required
             />
           </Form.Field>
           <Form.Field>
             <label>Image URL</label>
             <input
-              placeholder="Image URL"
+              placeholder="Required: Image URL must end with .png or .jpg"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
+              required
             />
           </Form.Field>
           <Form.Field>

@@ -66,7 +66,7 @@ function Login({ onLogin }) {
               <Divider />
               <p>
                 Don't have an account? &nbsp;
-                <button className="bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded" onClick={() => setShowLogin(false)}>
+                <button className="form-button bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded" onClick={() => setShowLogin(false)}>
                   Sign Up
                 </button>
               </p>
@@ -77,7 +77,7 @@ function Login({ onLogin }) {
               <Divider />
               <p>
                 Already have an account? &nbsp;
-                <button className="bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded" onClick={() => setShowLogin(true)}>
+                <button className="form-button bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded" onClick={() => setShowLogin(true)}>
                   Log In
                 </button>
               </p>

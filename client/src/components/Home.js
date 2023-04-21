@@ -64,7 +64,7 @@ function Home() {
           </div> */}
           <div className="snap-start w-screen h-screen overflow-scroll">
             <Embed
-              id='v898BALJBrE&t'
+              id='qdZF5yJA8b4'
               placeholder='https://steamuserimages-a.akamaihd.net/ugc/1675862552388648329/82113D1A5E258A3A4638B892E4CED1AA1035083D/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'
               source='youtube'
             />

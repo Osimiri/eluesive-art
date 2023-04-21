@@ -12,9 +12,9 @@ import ProjectPage from "../components/ProjectPage";
 import { UserContext } from "../components/UserProvider";
 
 function App() {
-  const [user, setUser] = useContext(UserContext); // using the useContext hook here
+  const [user, setUser] = useContext(UserContext); 
   const [projects, setProjects] = useState([]);
-  const location = useLocation(); // declare the location variable using the useLocation hook
+  const location = useLocation(); 
 
   useEffect(() => {
     fetch("/projects")

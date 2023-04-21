@@ -65,6 +65,7 @@ function ProjectPage() {
   };
 
   return (
+    
     <div>
       <div className="parent-div flex flex-row">
         <div className="project-details w-2/4 flex flex-col items-center justify-center">

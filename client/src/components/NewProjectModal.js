@@ -44,6 +44,9 @@ function NewProjectModal({ refreshExplore, setProjects, refreshProject }) {
         refreshExplore();
         refreshProject();
         handleClose();
+        setTitle("")
+        setImageUrl("");
+        setDescription("");
       })
       .catch((err) => console.error(err));
   };

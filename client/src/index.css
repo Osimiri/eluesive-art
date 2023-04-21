@@ -207,3 +207,8 @@ body{
 /* .image-modal.modal-content {
   padding: 0;
 } */
+
+.form-button:hover {
+  background-color: #3F292B;
+  color: #b284be;
+}

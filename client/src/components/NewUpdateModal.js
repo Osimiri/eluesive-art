@@ -2,21 +2,20 @@ import React, { useState, useContext } from "react";
 import { Button, Modal, Form } from "semantic-ui-react";
 import { UserContext } from "./UserProvider";
 
-function NewUpdateModal({project, setUpdates, updates}) {
+function NewUpdateModal({ project, setUpdates, updates }) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [mediaType, setMediaType] = useState("");
   const [notes, setNotes] = useState("");
   const [user, setUser] = useContext(UserContext);
-  
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   // console.log(project.id)
-  
-  const handleSubmit = () => {
 
+  const handleSubmit = () => {
     if (!title || !imageUrl || !mediaType) {
       alert("Please fill out all required fields.");
       return;
@@ -28,9 +27,9 @@ function NewUpdateModal({project, setUpdates, updates}) {
       image_url: imageUrl,
       title: title,
       likes: 0,
-      project_id: project.id
+      project_id: project.id,
     };
-    
+
     fetch("/updates", {
       method: "POST",
       headers: {
@@ -41,8 +40,12 @@ function NewUpdateModal({project, setUpdates, updates}) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setUpdates([...updates, data]); // update the list of updates
+        setUpdates([...updates, data]);
         handleClose();
+        setTitle("");
+        setImageUrl("");
+        setMediaType("");
+        setNotes("");
       })
       .catch((err) => console.error(err));
   };

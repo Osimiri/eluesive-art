@@ -93,7 +93,7 @@ function SignUpForm({ onLogin }) {
       </FormField>
       <FormField>
         <button
-          className="bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded"
+          className="form-button bg-[#f5f1ed] text-gray-900 px-4 py-2 rounded"
           type="submit"
         >
           {isLoading ? "Loading..." : "Sign Up"}
